@@ -1,0 +1,119 @@
+<div>
+    <div class="task" cdkDrag>
+      <p class="taskHeading">{{ content.summary }}</p>
+      <hr />
+      <!-- <p class="taskDisc">{{content.disc}}</p> -->
+      <button
+        type="button"
+        class="taskDisc btn"
+        data-toggle="modal"
+        data-target="#exampleModalCenter"
+      >
+        {{ content.description }}
+      </button>
+      <br />
+    </div>
+  </div>
+  
+  <!-- Modal -->
+  <div
+    class="modal fade"
+    id="exampleModalCenter"
+    tabindex="-1"
+    role="dialog"
+    aria-labelledby="exampleModalCenterTitle"
+    aria-hidden="true"
+  >
+    <div
+      class="modal-dialog modal-dialog-centered custom-modal-dialog"
+      role="document"
+    >
+      <div class="modal-content">
+        <!-- <div class="modal-header">
+          <h2 class="modal-title" id="exampleModalLongTitle">Name of Task</h2>
+          <button
+            type="button"
+            class="close"
+            data-dismiss="modal"
+            aria-label="Close"
+          >
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div> -->
+        <div class="modal-body">
+          <div class="row">
+            <div class="flex-container">
+              <h4 class="description-heading">
+                <strong>Task Description</strong>
+              </h4>
+              <div class="center-container">
+                <!-- Hidden file input -->
+                <input
+                  type="file"
+                  style="display: none"
+                  #fileInput
+                  (change)="handleFileInput($event)"
+                />
+                <!-- attach file button -->
+                <button
+                  mat-raised-button
+                  color="accent"
+                  style="margin-bottom: 10px"
+                  (click)="fileInput.click()"
+                >
+                  <mat-icon>link</mat-icon>
+                  Attach files
+                </button>
+              </div>
+            </div>
+            <!-- Display uploaded file's name -->
+            <div *ngIf="uploadedFileName">
+              Uploaded file: {{ uploadedFileName }}
+            </div>
+            <!-- ckeditor config -->
+            <div role="main">
+              <ckeditor [editor]="ckeditor" [config]="editorConfig"></ckeditor>
+            </div>
+            &nbsp; &nbsp; &nbsp;
+            <h4 class="activities-heading"><strong>Activity</strong></h4>
+            <div>
+              <mat-tab-group>
+                <mat-tab label="All">
+                  <mat-divider></mat-divider>
+                  <mat-list>
+                    <mat-list-item *ngFor="let item of simpleItems">
+                      {{ item }}
+                    </mat-list-item>
+                  </mat-list>
+                  <mat-divider></mat-divider>
+                </mat-tab>
+                <mat-tab label="Comments">
+                  <!-- ckeditor config -->
+                  <ckeditor
+                    [editor]="ckeditor"
+                    [config]="editorConfig"
+                  ></ckeditor>
+                </mat-tab>
+                <mat-tab label="History">
+                  <mat-divider></mat-divider>
+                  <mat-list>
+                    <mat-list-item *ngFor="let item of simpleItems">
+                      {{ item }}
+                    </mat-list-item>
+                  </mat-list>
+                  <mat-divider></mat-divider>
+                </mat-tab>
+              </mat-tab-group>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">
+            Close
+          </button>
+          <button type="button" class="btn btn-primary">Save Changes</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  
