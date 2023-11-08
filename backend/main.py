@@ -2,11 +2,27 @@ from flask import Flask, request, jsonify
 from pymongo import MongoClient
 from flask_cors import CORS
 from bson import json_util
+from bson.json_util import dumps
 
 app = Flask(__name__)
 client = MongoClient("mongodb://localhost:27017/")  
 db = client["mydatabase"]  
 CORS(app)  
+
+@app.route('/api/getTask', methods=['GET'])
+def lists():
+    data = list(db.task.find({}))
+    resp = dumps(data)
+    return resp
+
+
+@app.route('/api/updateTask/<id>/<new_status>', methods=['PUT'])
+def update_task_status(id,new_status):
+    try:
+        db.task.update_one({'id': int(id)}, {'$set': {'status': new_status}})
+        return jsonify({'message': 'Task updated successfully'})
+    except Exception as e:
+        return jsonify({'error': str(e)})
 
 @app.route('/api/register', methods=['POST'])
 def register():
@@ -60,6 +76,7 @@ def get_details():
     inprogress_data = json_util.dumps(inprogress_data)
     
     return jsonify(done = done_data, todo = todo_data, inprogress = inprogress_data)
+
 
 
 if __name__ == '__main__':

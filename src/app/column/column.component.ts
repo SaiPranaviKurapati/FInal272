@@ -5,7 +5,7 @@ import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 import { CreateTaskServiceService } from '../create-task-modal/create-task-service.service'
 import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
-
+import { GetTaskService } from './get-task.service';
 
 @Component({
   selector: 'app-column',
@@ -17,23 +17,27 @@ export class ColumnComponent {
   //   moveItemInArray(this.items, event.previousIndex, event.currentIndex);
   // }
 
-  constructor(private router: Router, private http:HttpClient) {}
+  constructor(private router: Router, private http:HttpClient, private GetTaskService: GetTaskService) {}
 
-  todoTasks = [];
-  inProgTasks = [];
-  doneTasks = [];
-
-  ngOnInit() {
-    // Make an HTTP GET request to your Flask server to fetch the JSON data
-    this.http.get('http://127.0.0.1:5000')
-      .subscribe((data: any) => {
-        this.todoTasks = JSON.parse(data.todo);
-        this.inProgTasks = JSON.parse(data.inprogress);
-        this.doneTasks = JSON.parse(data.done);
-      });
-    }
+  todoTasks: any[] = [];
+  inProgTasks: any[] = [];
+  doneTasks: any[] = [];
+  tasks: any[] = [];
   
+  ngOnInit(): void {
+    this.GetTaskService.getTasks().subscribe(data => {
+       this.tasks = data;
+       this.todoTasks = this.tasks.filter((task) => task.status === 'todo');
+       this.inProgTasks = this.tasks.filter((task) => task.status === 'inprog');
+       this.doneTasks = this.tasks.filter((task) => task.status === 'done');
+    });
+  }
+
   drop(event: any) {
+
+    let task_id = event.previousContainer.data[event.previousIndex].id;
+    let new_status = event.container.id;
+
     if (event.previousContainer === event.container) {
       moveItemInArray(event.container.data,
         event.previousIndex,
@@ -44,6 +48,20 @@ export class ColumnComponent {
         event.previousIndex, event.currentIndex);
         console.log(event.previousContainer.data + '-'+event.container.data +"-"+
         event.previousIndex+"-"+ event.currentIndex);
+
+        //Update status of task
+
+        this.GetTaskService.updateTaskStatus(task_id, new_status).subscribe(
+          (response) => {
+            console.log(response); // Handle the response from the server
+          },
+          (error) => {
+            console.error(error); // Handle any errors
+          }
+        );
+        
+
+
     }
   }
  
