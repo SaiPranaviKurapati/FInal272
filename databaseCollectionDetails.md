@@ -12,7 +12,7 @@ collection example and the parameters it takes in:
 {
   "project": "project1",
   "issuetype": "task",
-  "status": "to-do",
+  "status": "todo",   #['todo', 'inprog', 'done']
   "summary": "to do 1",
   "description": "to do 1",
   "assignee": "user1",
