@@ -11,7 +11,7 @@ CORS(app)
 
 @app.route('/api/getTask', methods=['GET'])
 def lists():
-    data = list(db.task.find({}))
+    data = list(db.taskDeatils.find({}))
     resp = dumps(data)
     return resp
 
@@ -19,7 +19,7 @@ def lists():
 @app.route('/api/updateTask/<id>/<new_status>', methods=['PUT'])
 def update_task_status(id,new_status):
     try:
-        db.task.update_one({'id': int(id)}, {'$set': {'status': new_status}})
+        db.taskDeatils.update_one({'id': int(id)}, {'$set': {'status': new_status}})
         return jsonify({'message': 'Task updated successfully'})
     except Exception as e:
         return jsonify({'error': str(e)})
