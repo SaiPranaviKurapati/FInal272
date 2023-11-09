@@ -27,15 +27,15 @@ export class ColumnComponent {
   ngOnInit(): void {
     this.GetTaskService.getTasks().subscribe(data => {
        this.tasks = data;
-       this.todoTasks = this.tasks.filter((task) => task.status === 'todo');
-       this.inProgTasks = this.tasks.filter((task) => task.status === 'inprog');
+       this.todoTasks = this.tasks.filter((task) => task.status === 'to-do');
+       this.inProgTasks = this.tasks.filter((task) => task.status === 'in-progress');
        this.doneTasks = this.tasks.filter((task) => task.status === 'done');
     });
   }
 
   drop(event: any) {
 
-    let task_id = event.previousContainer.data[event.previousIndex].id;
+    let task_id = event.previousContainer.data[event.previousIndex]._id.$oid;
     let new_status = event.container.id;
 
     if (event.previousContainer === event.container) {
@@ -60,8 +60,6 @@ export class ColumnComponent {
           }
         );
         
-
-
     }
   }
  

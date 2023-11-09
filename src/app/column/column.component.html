@@ -13,9 +13,9 @@
     <div class="row border taskRow" cdkDropListGroup>
       
       <div class="col taskCol list" cdkDropList
-                                    id = "todo"
+                                    id = "to-do"
                                     [cdkDropListData]="todoTasks"
-                                    cdkDropListConnectedTo="inprog"
+                                    cdkDropListConnectedTo="in-progress"
                                     (cdkDropListDropped)="drop($event)"
        >
        <p class="colHeading">To-Do</p>
@@ -25,7 +25,7 @@
       </div>
 
       <div class="col taskCol list" cdkDropList
-      id = "inprog"
+      id = "in-progress"
       [cdkDropListData]="inProgTasks"
       cdkDropListConnectedTo="inprog"
       (cdkDropListDropped)="drop($event)">
