@@ -3,6 +3,8 @@ from pymongo import MongoClient
 from flask_cors import CORS
 from bson import json_util
 from bson.json_util import dumps
+import itertools
+from bson.objectid import ObjectId
 
 app = Flask(__name__)
 client = MongoClient("mongodb://localhost:27017/")  
@@ -19,7 +21,8 @@ def lists():
 @app.route('/api/updateTask/<id>/<new_status>', methods=['PUT'])
 def update_task_status(id,new_status):
     try:
-        db.taskDeatils.update_one({'id': int(id)}, {'$set': {'status': new_status}})
+        document_id = ObjectId(id)
+        db.taskDeatils.update_one({'_id': document_id}, {'$set': {'status': new_status}})
         return jsonify({'message': 'Task updated successfully'})
     except Exception as e:
         return jsonify({'error': str(e)})
