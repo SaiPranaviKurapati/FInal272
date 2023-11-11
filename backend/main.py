@@ -68,19 +68,35 @@ def createTask():
     db.taskDeatils.insert_one({'project': project, 'issuetype': issuetype,'status':status,'summary':summary,'description':description,'assignee':assignee,'reporter':reporter})
     return jsonify({'message': 'Created task successfully'})
 
-@app.route('/', methods=['GET'])
-def get_details():
-    done_data= list(db.taskDeatils.find({'status':'done'}))
-    todo_data= list(db.taskDeatils.find({'status':'to-do'}))
-    inprogress_data= list(db.taskDeatils.find({'status':'in-progress'}))
+# @app.route('/', methods=['GET'])
+# def get_details():
+#     done_data= list(db.taskDeatils.find({'status':'done'}))
+#     todo_data= list(db.taskDeatils.find({'status':'to-do'}))
+#     inprogress_data= list(db.taskDeatils.find({'status':'in-progress'}))
     
-    done_data = json_util.dumps(done_data)
-    todo_data = json_util.dumps(todo_data)
-    inprogress_data = json_util.dumps(inprogress_data)
+#     done_data = json_util.dumps(done_data)
+#     todo_data = json_util.dumps(todo_data)
+#     inprogress_data = json_util.dumps(inprogress_data)
     
-    return jsonify(done = done_data, todo = todo_data, inprogress = inprogress_data)
+#     return jsonify(done = done_data, todo = todo_data, inprogress = inprogress_data)
 
+@app.route('/api/getProjects', methods=['GET','POST'])
+def get_projects():
+    projects_from_mongodb = list(db.projects.find())
+    db.projects.insert_one({'projectname': 'hi', 'projectdescription': 'hi'})
+    
+    # Transform the data into the desired format
+    projects = []
+    
+    for project in projects_from_mongodb:
+        project_data = {
+            'id': str(project['_id']),  # Use the MongoDB ObjectId as the 'id'
+            'name': project.get('projectname', ''),  # Use .get() to handle missing keys
+            'description': project.get('projectdescription', '')  # Use .get() to handle missing keys
+        }
+        projects.append(project_data)
 
+    return jsonify(projects)
 
 if __name__ == '__main__':
     app.run(debug=True)

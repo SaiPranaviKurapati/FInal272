@@ -1,0 +1,22 @@
+ #sidebar-wrapper {
+  min-height: 100%;
+  transition: margin 0.25s ease-out;
+  width: 241px;
+}
+
+#sidebar-wrapper .sidebar-heading {
+ 
+  font-size: 1.2rem;
+  width: 250px;
+  min-height: 100%;
+}
+
+#sidebar-wrapper .list-group {
+  width: 15rem;
+  min-height: 100vh;
+}
+#sidebar-wrapper .list-group .list-group-item{
+  border-bottom-width: 1 !important;
+}
+
+  

@@ -21,6 +21,10 @@ import { LoginComponent } from './signin/signin.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { CreateIssueComponent } from './create-task-modal/create-task-modal.component';
+import { AdmindashboardComponent } from './admindashboard/admindashboard.component';
+import { AdminheaderComponent } from './adminheader/adminheader.component';
+import { AdminsidebarComponent } from './adminsidebar/adminsidebar.component';
+
 
 @NgModule({
   declarations: [
@@ -32,7 +36,11 @@ import { CreateIssueComponent } from './create-task-modal/create-task-modal.comp
     TaskComponent,
     DashboardComponent,
     LoginComponent,
-    CreateIssueComponent
+    CreateIssueComponent,
+    AdmindashboardComponent,
+    AdminheaderComponent,
+    AdminsidebarComponent,
+   
   ],
   imports: [
     BrowserModule,
