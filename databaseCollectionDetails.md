@@ -18,3 +18,5 @@ collection example and the parameters it takes in:
   "assignee": "user1",
   "reporter": "user1"
 }
+
+committed for jenkins
