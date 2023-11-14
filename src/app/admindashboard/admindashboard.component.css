@@ -14,27 +14,31 @@ html, body {
 
 /* Header styles */
 .header {
-  background-color: #333;
+  /* background-color: #333; */
   color: #fff;
-  padding: 10px;
+  padding: 0%;
   text-align: center;
+  position: fixed;
+  min-width: 100%;
 }
 
 /* Sidebar styles */
 .sidebar {
-  background-color: #333;
+  /* background-color: #333; */
   color: #fff;
   width: 250px; /* Adjust the width as needed */
    padding-left: 0%;
   /* padding: 10px; */
-  height: 100%;
-  margin-left: 0; /* Set the left margin to 0 to ensure it's fully on the left */
+  min-height: 100%;
+  margin-left: 0;
+  margin-top: 60px; /* Set the left margin to 0 to ensure it's fully on the left */
 }
 
 /* Content (list of projects) styles */
 .content {
   padding: 10px;
   flex-grow: 1; /* Allow content to grow and fill available space */
+  margin-top: 100px;
 }
 
 /* Project item styles */
@@ -54,3 +58,26 @@ html, body {
 .project-item a:hover {
   text-decoration: underline;
 }
+#sidebar-wrapper {
+  height: 100vh;
+  transition: margin 0.25s ease-out;
+  width: 241px;
+  position: fixed;
+}
+
+#sidebar-wrapper .sidebar-heading {
+ 
+  font-size: 1.2rem;
+  width: 250px;
+  height: 100vh;
+}
+
+#sidebar-wrapper .list-group {
+  width: 15rem;
+ height: 100vh;
+}
+#sidebar-wrapper .list-group .list-group-item{
+  border-bottom-width: 1 !important;
+}
+
+  
