@@ -5,9 +5,12 @@ import { LoginComponent } from './signin/signin.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { SidebarComponent } from './sidebar/sidebar.component';
 import { CreateIssueComponent } from './create-task-modal/create-task-modal.component';
+import { AdmindashboardComponent } from './admindashboard/admindashboard.component';
 
 const routes: Routes = [
-  { path: '', redirectTo: '/signin', pathMatch: 'full' },
+  // { path: '', redirectTo: '/signin', pathMatch: 'full' },
+  { path: '', redirectTo: '/admindashboard', pathMatch: 'full' },
+  { path:'admindashboard', component:AdmindashboardComponent},
   { path:'signin', component:LoginComponent},
   // { path: 'column1', component: ColumnComponent },
   // { path: 'column2', component: ColumnComponent },
