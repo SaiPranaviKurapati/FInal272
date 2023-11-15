@@ -24,6 +24,8 @@ import { CreateIssueComponent } from './create-task-modal/create-task-modal.comp
 import { AdmindashboardComponent } from './admindashboard/admindashboard.component';
 import { AdminheaderComponent } from './adminheader/adminheader.component';
 import { AdminsidebarComponent } from './adminsidebar/adminsidebar.component';
+import { GraphComponent } from './graph/graph.component';
+import { NgChartsModule, NgChartsConfiguration  } from 'ng2-charts';
 
 
 @NgModule({
@@ -40,6 +42,7 @@ import { AdminsidebarComponent } from './adminsidebar/adminsidebar.component';
     AdmindashboardComponent,
     AdminheaderComponent,
     AdminsidebarComponent,
+    GraphComponent,
    
   ],
   imports: [
@@ -57,8 +60,10 @@ import { AdminsidebarComponent } from './adminsidebar/adminsidebar.component';
     HttpClientModule,
     FormsModule,
     MatInputModule,
+    NgChartsModule
   ],
-  providers: [],
-  bootstrap: [AppComponent]
+  providers: [{ provide: NgChartsConfiguration, useValue: { generateColors: false }}],
+  bootstrap: [AppComponent],
+  
 })
 export class AppModule { }

@@ -29,6 +29,7 @@ html, body {
   width: 250px; /* Adjust the width as needed */
    padding-left: 0%;
   /* padding: 10px; */
+  position: fixed;
   min-height: 100%;
   margin-left: 0;
   margin-top: 60px; /* Set the left margin to 0 to ensure it's fully on the left */
@@ -39,6 +40,7 @@ html, body {
   padding: 10px;
   flex-grow: 1; /* Allow content to grow and fill available space */
   margin-top: 100px;
+  margin-left: 25%;
 }
 
 /* Project item styles */
@@ -59,7 +61,7 @@ html, body {
   text-decoration: underline;
 }
 #sidebar-wrapper {
-  height: 100vh;
+  height: 100%;
   transition: margin 0.25s ease-out;
   width: 241px;
   position: fixed;
@@ -69,12 +71,12 @@ html, body {
  
   font-size: 1.2rem;
   width: 250px;
-  height: 100vh;
+  height: 100%;
 }
 
 #sidebar-wrapper .list-group {
   width: 15rem;
- height: 100vh;
+ height: 100%;
 }
 #sidebar-wrapper .list-group .list-group-item{
   border-bottom-width: 1 !important;

@@ -97,6 +97,24 @@ def get_projects():
         projects.append(project_data)
 
     return jsonify(projects)
+# @app.route('/api/graph')
+# def get_data():
+#     # Return sample data for testing
+#     data = {'labels': ['To-do', 'In Progress', 'Done'],
+#             'values': [30, 50, 20]}
+#     return jsonify(data)
+@app.route('/api/graph', methods=['GET'])
+def get_details():
+    done_count = db.taskDeatils.count_documents({'status': 'done'})
+    todo_count = db.taskDeatils.count_documents({'status': 'to-do'})
+    inprogress_count = db.taskDeatils.count_documents({'status': 'in-progress'})
+    print(done_count)
+    print(todo_count)
+    print(inprogress_count)
+    data = {'labels': ['To-do', 'In Progress', 'Done'],
+           'values': [todo_count, inprogress_count,done_count]}
+
+    return jsonify(data)
 
 if __name__ == '__main__':
     app.run(debug=True)
