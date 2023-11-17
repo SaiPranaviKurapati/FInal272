@@ -8,6 +8,9 @@ import { Router } from '@angular/router';
   styleUrls: ['./admindashboard.component.css']
 })
 export class AdmindashboardComponent implements OnInit {
+ 
+navigateToProjectDetail(projectName: string) {
+  this.router.navigate(['/graph', { projectName: projectName }]);}
   // projects = [
   //   { id: 1, name: 'Project 1', description: 'Description of Project 1' },
   //   { id: 2, name: 'Project 2', description: 'Description of Project 2' },
@@ -22,7 +25,7 @@ export class AdmindashboardComponent implements OnInit {
 
 projects: any[] = []; // Define the 'projects' array property
 
-  constructor(private adminservice: AdminserviceService) {}
+  constructor(private adminservice: AdminserviceService,private router: Router) {}
 
   ngOnInit() {
     this.adminservice.getProjects().subscribe((data) => {

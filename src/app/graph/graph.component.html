@@ -1,16 +1,23 @@
-<div>
-    <canvas baseChart
+
+        <div class="desc">
+              <br> <h5>Project Name</h5> {{projectName}}<br><br>
+               <h5>Project Description</h5>{{ description }}
+               
+            </div>
+<div class="div1">
+            <canvas baseChart
             [datasets]="barChartData"
             [labels]="barChartLabels"
             [options]="barChartOptions"
             [legend]="barChartLegend"
-            [type]="'bar'">
+            [type]="'line'">
     </canvas>
+   
     <br>
     <button type="button" style="float: center; margin-left: 70px;">Add User</button>
     <button type="button" style="float: center;margin-left: 70px;">Remove User</button>
     <div style="clear: both;"></div>
-  </div>
+</div>
 
   
   
