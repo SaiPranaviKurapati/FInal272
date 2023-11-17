@@ -1,4 +1,4 @@
-div{
+.div1{
     height: 600px;
     width: 400px;
     align-items: center;
@@ -8,4 +8,8 @@ div{
 button{
     border-radius: 10px;
     border: 1px solid black;
+}
+.desc{
+    align-items: center;
+    margin-left: 40%;
 }

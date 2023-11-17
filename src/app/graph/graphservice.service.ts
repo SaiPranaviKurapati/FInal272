@@ -12,8 +12,10 @@ export class GraphserviceService {
   
     constructor(private http: HttpClient) { }
   
-    getData(): Observable<any> {
-      return this.http.get<any>(this.apiUrl);
+    getData(projectName: string): Observable<any> {
+      const url = `${this.apiUrl}/${projectName}`;
+      return this.http.get(url);
+      // return this.http.get<any>('this.apiUrl/${projectName}');
     }
   
   

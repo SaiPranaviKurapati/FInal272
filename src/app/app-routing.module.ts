@@ -11,7 +11,7 @@ import { GraphComponent } from './graph/graph.component';
 const routes: Routes = [
   // { path: '', redirectTo: '/signin', pathMatch: 'full' },
   // { path: '', redirectTo: '/admindashboard', pathMatch: 'full' },
-   { path: '', redirectTo: '/graph', pathMatch: 'full' },
+   { path: '', redirectTo: '/admindashboard', pathMatch: 'full' },
   { path:'admindashboard', component:AdmindashboardComponent},
   {path:'graph',component:GraphComponent},
   { path:'signin', component:LoginComponent},

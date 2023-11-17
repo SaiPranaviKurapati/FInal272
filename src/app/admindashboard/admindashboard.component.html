@@ -27,7 +27,9 @@
   <div class="content">
     <div *ngFor="let project of projects" class="project-item">
       <!-- Display project data here -->
-      <a [routerLink]="'/project/' + project.id">{{ project.name }}</a>
+      <!-- <a (click)="navigateToProjectDetail()">{{ project.name }}</a> -->
+      <button type="button btnCreate" class="btn btn-primary" style="
+        float: right;" (click)="navigateToProjectDetail(project.name)">{{ project.name }}</button>
       <p>{{ project.description }}</p>
     </div>
   </div>

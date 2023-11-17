@@ -83,7 +83,7 @@ def createTask():
 @app.route('/api/getProjects', methods=['GET','POST'])
 def get_projects():
     projects_from_mongodb = list(db.projects.find())
-    db.projects.insert_one({'projectname': 'hi', 'projectdescription': 'hi'})
+    # db.projects.insert_one({'projectname': 'hi', 'projectdescription': 'hi'})
     
     # Transform the data into the desired format
     projects = []
@@ -103,16 +103,24 @@ def get_projects():
 #     data = {'labels': ['To-do', 'In Progress', 'Done'],
 #             'values': [30, 50, 20]}
 #     return jsonify(data)
-@app.route('/api/graph', methods=['GET'])
-def get_details():
-    done_count = db.taskDeatils.count_documents({'status': 'done'})
-    todo_count = db.taskDeatils.count_documents({'status': 'to-do'})
-    inprogress_count = db.taskDeatils.count_documents({'status': 'in-progress'})
+@app.route('/api/graph/<string:project_name>', methods=['GET'])
+def get_details(project_name):
+    
+  
+    print("project",project_name)
+    done_count = db.taskDeatils.count_documents({'status': 'done', 'project': project_name})
+    todo_count = db.taskDeatils.count_documents({'status': 'to-do', 'project': project_name})
+    inprogress_count = db.taskDeatils.count_documents({'status': 'in-progress', 'project': project_name})
+    project_description = db.projects.find_one({'projectname': project_name}).get('projectdescription', '')
     print(done_count)
     print(todo_count)
     print(inprogress_count)
-    data = {'labels': ['To-do', 'In Progress', 'Done'],
-           'values': [todo_count, inprogress_count,done_count]}
+    data = {
+        'project_name': project_name,
+        'project_description': project_description,
+        'labels': ['To-do', 'In Progress', 'Done'],
+           'values': [todo_count, inprogress_count,done_count],
+           }
 
     return jsonify(data)
 
