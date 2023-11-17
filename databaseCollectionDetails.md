@@ -18,5 +18,11 @@ collection example and the parameters it takes in:
   "assignee": "user1",
   "reporter": "user1"
 }
+Collection name: "projects"
+collection example and the parameters it takes in:
+{
+  "projectname": "ghsjc1",
+  "projectdescription": "descr1"
+}
 
-committed for jenkins
+
