@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ChartOptions, ChartType, ChartDataset } from 'chart.js';
 import { GraphserviceService } from './graphservice.service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-graph',
@@ -20,10 +20,12 @@ export class GraphComponent implements OnInit {
   ];
   projectName: any;
   description: any;
+  users: any;
+  newusers: any;
   
   
 
-  constructor(private dataService: GraphserviceService,private route: ActivatedRoute) {
+  constructor(private dataService: GraphserviceService,private route: ActivatedRoute, private router:Router) {
     // this.projectName = this.route.snapshot?.root?.firstChild?.snapshot?.data?.state?.projectName;
    }
 
@@ -38,6 +40,18 @@ export class GraphComponent implements OnInit {
       console.log(this.barChartLabels)
       
     });
+    this.dataService.getUsers(this.projectName).subscribe(data=>{
+        this.users = data.project_users;
+        console.log(this.users);
+    });
+    this.dataService.getNewUsers(this.projectName).subscribe(data=>{
+      this.newusers = data.new_project_users;
+      console.log(this.newusers);
+    });
+
     
   }
+  // AddUser() {
+  //   this.router.navigate(['/']);}
+
 }

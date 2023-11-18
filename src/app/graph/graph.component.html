@@ -1,23 +1,39 @@
-
-        <div class="desc">
-              <br> <h5>Project Name</h5> {{projectName}}<br><br>
-               <h5>Project Description</h5>{{ description }}
-               
-            </div>
-<div class="div1">
-            <canvas baseChart
-            [datasets]="barChartData"
-            [labels]="barChartLabels"
-            [options]="barChartOptions"
-            [legend]="barChartLegend"
-            [type]="'line'">
-    </canvas>
-   
-    <br>
-    <button type="button" style="float: center; margin-left: 70px;">Add User</button>
-    <button type="button" style="float: center;margin-left: 70px;">Remove User</button>
-    <div style="clear: both;"></div>
-</div>
-
-  
-  
+<div class="desc">
+        <br>
+        <h5>Project Name</h5> {{ projectName }}<br><br>
+        <h5>Project Description</h5>{{ description }}
+      </div>
+      
+      <div class="div1">
+        <canvas baseChart
+                [datasets]="barChartData"
+                [labels]="barChartLabels"
+                [options]="barChartOptions"
+                [legend]="barChartLegend"
+                [type]="'line'">
+        </canvas>
+      
+        <br>
+        <select>
+                <option *ngFor="let user of newusers" [value]="user.username">{{ user.username }}</option>
+        </select>
+        <button type="button" style="float: center; margin-left: 70px;">Add User</button>
+        <select>
+                <option *ngFor="let user of users" [value]="user.username">{{ user.username }}</option>
+        </select>
+        <button type="button" style="float: center; margin-left: 70px;">Remove User</button>
+        <div style="clear: both;"></div>
+        <div class="userslist">
+        <!-- Assuming project_users is an array of objects -->
+        <ul *ngFor="let user of users">
+          <li>
+            Username: {{ user.username }}<br>
+            Name: {{ user.name }}<br>
+            Role: {{ user.role }}<br>
+            Access Project: {{ user.accessproject }}<br>
+            <hr>
+          </li>
+        </ul>
+        </div>
+      </div>
+      
