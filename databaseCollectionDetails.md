@@ -1,10 +1,13 @@
 Please add details of the collections used in the project here:
 
-Collection name: "Users"
+Collection name: "users"
 collection example and the parameters it takes in:
 {
-  "username": "examplemail@gmail.com",
-  "password": "password@123"
+  "username": "user1@example.com",
+  "password": "password1",
+  "name": "User One",
+  "role": "admin",
+  "accessproject": "project1"
 }
 
 Collection name: "taskDeatils"
@@ -18,6 +21,7 @@ collection example and the parameters it takes in:
   "assignee": "user1",
   "reporter": "user1"
 }
+
 Collection name: "projects"
 collection example and the parameters it takes in:
 {

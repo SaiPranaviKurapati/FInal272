@@ -124,5 +124,47 @@ def get_details(project_name):
 
     return jsonify(data)
 
+@app.route('/api/project_users/<project_name>', methods=['GET'])
+def get_project_users(project_name):
+    # Query the users collection for users with access to the specified project
+    project_users = db.users.find({'accessproject': project_name})
+
+    # Prepare the response
+    user_list = []
+    for user in project_users:
+        user_data = {
+            '_id': str(user['_id']),
+            'username': user['username'],
+            'name': user['name'],
+            'role': user['role'],
+            'accessproject': user['accessproject']
+        }
+        user_list.append(user_data)
+    
+    print(user_list)
+
+    return jsonify({'project_users': user_list})
+
+@app.route('/api/new_users/<project_name>', methods=['GET'])
+def get_new_users(project_name):
+
+    new_project_users = db.users.find({'accessproject': {'$nin': [project_name],'$exists': True}})
+
+    # Prepare the response
+    user_list = []
+    for user in new_project_users:
+        user_data = {
+            '_id': str(user['_id']),
+            'username': user['username'],
+            'name': user['name'],
+            'role': user['role'],
+            'accessproject': user['accessproject']
+        }
+        user_list.append(user_data)
+    
+    print(user_list)
+
+    return jsonify({'new_project_users': user_list})
+
 if __name__ == '__main__':
     app.run(debug=True)
