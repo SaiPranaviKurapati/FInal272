@@ -1,15 +1,20 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { CreateIssueComponent } from './create-task-modal.component';
-
+import { UtilityService } from '../utility.service';
 @Injectable({
   providedIn: 'root'
 })
 export class CreateTaskServiceService {
   
   private baseUrl: string = 'http://127.0.0.1:5000'; // Set your base URL here
+  projects: any[] = [];
+  constructor(private http: HttpClient, private UtilityService: UtilityService) {
+    this.UtilityService.getProjects().subscribe((data) => {
+      this.projects = data;
+    });
 
-  constructor(private http: HttpClient) {}
+  }
 
   createTask(project: string, issuetype:string,status: string,summary:string,description:string,assignee:string,reporter:string) {
     const task = { project, issuetype,status,summary,description,assignee,reporter};

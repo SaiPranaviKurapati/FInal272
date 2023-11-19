@@ -3,14 +3,23 @@
       <p class="taskHeading">{{ content.summary }}</p>
       <hr />
       <!-- <p class="taskDisc">{{content.disc}}</p> -->
-      <button
+      <div class="icon-container">
+        <button
         type="button"
         class="taskDisc btn"
-        data-toggle="modal"
-        data-target="#exampleModalCenter"
       >
         {{ content.description }}
-      </button>
+      </button><!-- Display the bug icon if the task type is 'bug' -->
+      <i *ngIf="content.issuetype == 'bug'" class="fas fa-icon type fa-bug"></i>
+      <!-- Display the tasks icon if the task type is 'task' -->
+      <i *ngIf="content.issuetype == 'task'" class="fas fa-icon type fa-tasks"></i>
+      <!-- <i class="fas fa-icon type" ></i> -->
+      </div>
+      <!-- <i class="fas fa-icon priority fa-bug"></i> -->
+      <p class="assign">Assigned to : User1</p>
+
+    <button class="btn btn-primary btn-sm details "  data-toggle="modal"
+    data-target="#exampleModalCenter">View Details</button>
       <br />
     </div>
   </div>

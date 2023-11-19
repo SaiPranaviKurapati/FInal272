@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component , EventEmitter, Output, Input } from '@angular/core';
+import { UtilityService } from '../utility.service';
 
 @Component({
   selector: 'app-sidebar',
@@ -7,4 +8,16 @@ import { Component } from '@angular/core';
 })
 export class SidebarComponent {
 
+  
+  constructor(private UtilityService: UtilityService) {
+    
+  }
+  @Input() projects:any[] = [];
+  @Output() projectChangeEmmiter:EventEmitter<string> 
+  = new EventEmitter<string>(); 
+
+
+  changeProject(projectName: string) {
+    this.UtilityService.changeProjectName(projectName);
+  }
 }
