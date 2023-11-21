@@ -23,6 +23,7 @@ export class UtilityService {
 
   getTasks(projectName: string): Observable<any> {
     return this.http.get(`${this.apiBaseUrl}/api/getTask/${projectName}`);
+    console.log(`${this.apiBaseUrl}/api/getTask/${projectName}`);
   }
 
   getIssues(projectName: string): Observable<any> {
