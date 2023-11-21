@@ -26,6 +26,11 @@ import { AdminheaderComponent } from './adminheader/adminheader.component';
 import { AdminsidebarComponent } from './adminsidebar/adminsidebar.component';
 import { GraphComponent } from './graph/graph.component';
 import { NgChartsModule, NgChartsConfiguration  } from 'ng2-charts';
+import { BacklogComponent } from './backlog/backlog.component';
+import { CreateBacklogComponent } from './create-backlog/create-backlog.component';
+import { EditBacklogComponent } from './edit-backlog/edit-backlog.component';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { CreateProjectComponent } from './create-project/create-project.component';
 
 
 @NgModule({
@@ -43,6 +48,10 @@ import { NgChartsModule, NgChartsConfiguration  } from 'ng2-charts';
     AdminheaderComponent,
     AdminsidebarComponent,
     GraphComponent,
+    BacklogComponent,
+    CreateBacklogComponent,
+    EditBacklogComponent,
+    CreateProjectComponent,
    
   ],
   imports: [
@@ -60,7 +69,8 @@ import { NgChartsModule, NgChartsConfiguration  } from 'ng2-charts';
     HttpClientModule,
     FormsModule,
     MatInputModule,
-    NgChartsModule
+    NgChartsModule,
+    NgbModule
   ],
   providers: [{ provide: NgChartsConfiguration, useValue: { generateColors: false }}],
   bootstrap: [AppComponent],

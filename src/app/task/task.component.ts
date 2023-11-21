@@ -61,4 +61,17 @@ export class TaskComponent {
       console.log('Uploaded file:', file.name);
     }
   }
+
+  getPriorityIconClass(): { [key: string]: boolean } {
+    if (this.content && this.content.issuetype) {
+      return {
+        "fas fa-icon type fa-none":this.content.issuetype.trim() == 'none',
+        "fas fa-icon type fa-tasks": this.content.issuetype.trim() == 'task',
+        "fas fa-icon type fa-bug": this.content.issuetype.trim() == 'bug',
+        // Add more classes if needed
+      };
+    }
+    // Handle the case when this.content or this.content.issuetype is undefined
+    return {};
+  }
 }

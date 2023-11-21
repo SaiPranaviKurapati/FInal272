@@ -11,12 +11,17 @@ client = MongoClient("mongodb://localhost:27017/")
 db = client["mydatabase"]  
 CORS(app)  
 
-@app.route('/api/getTask', methods=['GET'])
-def lists():
-    data = list(db.taskDeatils.find({}))
+@app.route('/api/getTask/<project>', methods=['GET'])
+def lists(project):
+    data = list(db.taskDeatils.find({'project': project}))
     resp = dumps(data)
     return resp
 
+@app.route('/api/getIssue/<project>', methods=['GET'])
+def getIssue(project):
+    data = list(db.issueDetails.find({'project': project}))
+    resp = dumps(data)
+    return resp
 
 @app.route('/api/updateTask/<id>/<new_status>', methods=['PUT'])
 def update_task_status(id,new_status):
@@ -53,6 +58,83 @@ def login():
     else:
         return jsonify({'message': 'Login failed'}),400
     
+@app.route('/api/createBacklog', methods=['POST'])
+def createBacklog():
+    task_data = request.get_json()
+    print(task_data)
+    project = task_data.get('project')
+    issuetype = task_data.get('issuetype')
+    status = task_data.get('status')
+    summary = task_data.get('summary')
+    description = task_data.get('description')
+    assignee = task_data.get('assignee')
+    reporter = task_data.get('reporter')
+    tags = task_data.get('tags')
+    priority = task_data.get('priority')
+    
+    db.issueDetails.insert_one({'project': project, 'issuetype': issuetype,'status':status,'summary':summary,'description':description,'assignee':assignee,'reporter':reporter,'tags':tags,'priority':priority})
+    return jsonify({'message': 'Created task successfully'})    
+
+    
+@app.route('/api/deleteBacklog/<id>', methods=['DELETE'])
+def deleteBacklog(id):
+    try:
+        # Get the _id of the issue to be deleted from the request
+        # # Check if the issue_id is a valid ObjectId
+        # if not ObjectId.is_valid(id):
+        #     return jsonify({"error": "Invalid id format"}), 400
+
+        # Convert the string _id to ObjectId
+        doc_id = ObjectId(id)
+
+        # Find and delete the issue by _id
+        result = db.issueDetails.delete_one({"_id": doc_id})
+
+        # Check if the issue was found and deleted
+        if result.deleted_count == 1:
+            return jsonify({"message": "Issue deleted successfully"})
+        else:
+            return jsonify({"error": "Issue not found"}), 404
+
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
+@app.route('/api/editBacklog/<id>', methods=['PUT'])
+def edit_backlog(id):
+    try:
+        data = request.get_json()
+
+        # Update the issue by _id
+        result = db.issueDetails.update_one(
+            {"_id": ObjectId(id)},
+            {"$set": data}
+        )
+
+        # Check if the issue was found and updated
+        if result.modified_count == 1:
+            return jsonify({"message": "Issue updated successfully"})
+        else:
+            return jsonify({"error": "Issue not found"}), 404
+
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
+@app.route('/api/getBacklog/<id>', methods=['GET'])
+def get_backlog(id):
+    data = (db.issueDetails.find_one({"_id": ObjectId(id)}))
+    resp = dumps(data)
+    return resp
+
+@app.route('/api/createProject', methods=['POST'])
+def createProject():
+    task_data = request.get_json()
+    project = task_data.get('project')
+    description = task_data.get('description')
+    
+    db.projects.insert_one({'projectname': project,'projectdescription':description})
+    return jsonify({'message': 'Created task successfully'})
+
+
 @app.route('/api/createTask', methods=['POST'])
 def createTask():
     task_data = request.get_json()
