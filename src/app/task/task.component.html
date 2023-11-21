@@ -38,33 +38,21 @@
       role="document"
     >
       <div class="modal-content">
-        <!-- <div class="modal-header">
-          <h2 class="modal-title" id="exampleModalLongTitle">Name of Task</h2>
-          <button
-            type="button"
-            class="close"
-            data-dismiss="modal"
-            aria-label="Close"
-          >
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div> -->
         <div class="modal-body">
-          <div class="row">
+          <!-- <div class="row">
             <div class="flex-container">
               <h4 class="description-heading">
                 <strong>Task Description</strong>
               </h4>
-              <div class="center-container">
+              <div class="center-container"> -->
                 <!-- Hidden file input -->
-                <input
+                <!-- <input
                   type="file"
                   style="display: none"
                   #fileInput
-                  (change)="handleFileInput($event)"
-                />
+                  (change)="handleFileInput($event)" -->
                 <!-- attach file button -->
-                <button
+                <!-- <button
                   mat-raised-button
                   color="accent"
                   style="margin-bottom: 10px"
@@ -74,13 +62,13 @@
                   Attach files
                 </button>
               </div>
-            </div>
+            </div> -->
             <!-- Display uploaded file's name -->
-            <div *ngIf="uploadedFileName">
+            <!-- <div *ngIf="uploadedFileName">
               Uploaded file: {{ uploadedFileName }}
-            </div>
+            </div> -->
             <!-- ckeditor config -->
-            <div role="main">
+            <!-- <div role="main">
               <ckeditor [editor]="ckeditor" [config]="editorConfig"></ckeditor>
             </div>
             &nbsp; &nbsp; &nbsp;
@@ -96,9 +84,9 @@
                   </mat-list>
                   <mat-divider></mat-divider>
                 </mat-tab>
-                <mat-tab label="Comments">
+                <mat-tab label="Comments"> -->
                   <!-- ckeditor config -->
-                  <ckeditor
+                  <!-- <ckeditor
                     [editor]="ckeditor"
                     [config]="editorConfig"
                   ></ckeditor>
@@ -114,7 +102,64 @@
                 </mat-tab>
               </mat-tab-group>
             </div>
+          </div> -->
+        
+          <div class="create-issue-container">
+            <h2>Update Task</h2>
+            <form>
+              <div class="form-group">
+                <label for="projectDropdown">Project</label>
+                <select id="project" name="project" class="form-control">
+                  <option value="project1">Project 1</option>
+                  <option value="project2">Project 2</option>
+                  <!-- Add more project options here -->
+                </select>
+              </div>
+              <div class="form-group">
+                <label for="issueTypeDropdown">Issue Type</label>
+                <select id="issuetype" name="issuetype" class="form-control">
+                  <option value="task">Task</option>
+                  <option value="bug">Bug</option>
+                  <!-- Add more issue type options here -->
+                </select>
+              </div>
+              <div class="form-group">
+                <label for="statusDropdown">Status</label>
+                <select id="status" name="status" class="form-control">
+                  <option value="to-do">To-Do</option>
+                  <option value="in-progress">In Progress</option>
+                  <option value="done">Done</option>
+                  <!-- Add more status options here -->
+                </select>
+              </div>
+              <div class="form-group">
+                <label for="summary">Summary</label>
+                <input type="text" id="summary" name="summary" class="form-control">
+              </div>
+              <div class="form-group">
+                <label>Description</label>
+                <textarea class="form-control" id="description" name="description"></textarea>
+              </div>
+              <div class="form-group">
+                <label for="assigneeDropdown">Assignee</label>
+                <select id="assignee" name="assignee" class="form-control">
+                  <option value="user1">User 1</option>
+                  <option value="user2">User 2</option>
+                  <!-- Add more assignee options here -->
+                </select>
+              </div>
+              <div class="form-group">
+                <label for="reporterDropdown">Reporter</label>
+                <select id="reporter" name="reporter"  class="form-control">
+                  <option value="user1">User 1</option>
+                  <option value="user2">User 2</option>
+                  <!-- Add more reporter options here -->
+                </select>
+              </div>
+            </form>
           </div>
+
+        
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-dismiss="modal">
