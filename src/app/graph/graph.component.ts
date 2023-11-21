@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ChartOptions, ChartType, ChartDataset } from 'chart.js';
 import { GraphserviceService } from './graphservice.service';
 import { ActivatedRoute, Router } from '@angular/router';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-graph',
@@ -22,10 +23,13 @@ export class GraphComponent implements OnInit {
   description: any;
   users: any;
   newusers: any;
+  selectedUsername: any;
+  selectedUsername1: any;
+  message:string | undefined;
   
   
 
-  constructor(private dataService: GraphserviceService,private route: ActivatedRoute, private router:Router) {
+  constructor(private dataService: GraphserviceService,private route: ActivatedRoute, private router:Router,private http: HttpClient) {
     // this.projectName = this.route.snapshot?.root?.firstChild?.snapshot?.data?.state?.projectName;
    }
 
@@ -48,10 +52,30 @@ export class GraphComponent implements OnInit {
       this.newusers = data.new_project_users;
       console.log(this.newusers);
     });
-
     
   }
-  // AddUser() {
-  //   this.router.navigate(['/']);}
+  Adduser(){
+    console.log('Selected Username:', this.selectedUsername);
+    console.log('Project Name:', this.projectName);
 
+    this.dataService.updateprojecttouser(this.projectName,this.selectedUsername).subscribe(data=>{
+      alert("User added successfully");
+      location.reload();
+     
+    //  this.router.navigate(['/graph', { projectName: this.projectName }])
+    });
+    
+  }
+  Removeuser(){
+    console.log('Selected Username:', this.selectedUsername1);
+    console.log('Project Name:', this.projectName);
+
+    this.dataService.deleteprojectfromuser(this.projectName,this.selectedUsername1).subscribe(data=>{
+     alert("User removed succesfully");
+    //  this.router.navigate(['/graph', { projectName: this.projectName }])
+     location.reload();
+
+    });
+    
+  }
 }
