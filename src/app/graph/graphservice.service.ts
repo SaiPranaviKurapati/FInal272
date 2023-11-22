@@ -6,6 +6,7 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class GraphserviceService {
+   
 
   
     private apiUrl = 'http://127.0.0.1:5000/api/graph'; // Update with your Flask API URL
@@ -31,7 +32,18 @@ export class GraphserviceService {
       return this.http.get(newurl);
       // return this.http.get<any>('this.apiUrl/${projectName}');
     }
-    
+    updateprojecttouser(projectName: any, selectedUsername: any) {
+      console.log("inservice ts",projectName)
+      console.log("inservice ts",selectedUsername)
+      const newurl = `http://127.0.0.1:5000//addusertoproject/${selectedUsername}/${projectName}`;
+      return this.http.get(newurl);
+    }
+    deleteprojectfromuser(projectName: any, selectedUsername1: any) {
+      console.log("inservice ts",projectName)
+      console.log("inservice ts",selectedUsername1)
+      const newurl = `http://127.0.0.1:5000/deleteusertoproject/${selectedUsername1}/${projectName}`;
+      return this.http.get(newurl);
+    }
     
   
   

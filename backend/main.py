@@ -247,6 +247,34 @@ def get_new_users(project_name):
     print(user_list)
 
     return jsonify({'new_project_users': user_list})
+@app.route('/addusertoproject/<username>/<projectname>', methods=['GET'])
+def update_project(username,projectname):
+    # data = request.json
+    # username = data.get('username')
+    # projectname = data.get('projectname')
+    print("usser in main",username)
+    print(projectname)
+
+    # Use pymongo to update the MongoDB collection
+   
+    db.users.update_one({'username': username}, {'$addToSet': {'accessproject': projectname}})
+
+    
+    return jsonify({'message': "success"})
+@app.route('/deleteusertoproject/<username>/<projectname>', methods=['GET'])
+def delete_project(username,projectname):
+    # data = request.json
+    # username = data.get('username')
+    # projectname = data.get('projectname')
+    print("usser in main",username)
+    print(projectname)
+
+    # Use pymongo to update the MongoDB collection
+   
+    db.users.update_one({'username': username}, {'$pull': {'accessproject': projectname}})
+
+    
+    return jsonify({'message': "success"})
 
 if __name__ == '__main__':
     app.run(debug=True)
