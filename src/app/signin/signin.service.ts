@@ -12,9 +12,12 @@ export class AuthService {
 
   login(username: string, password: string) {
     const user = { username, password };
-
     const loginUrl = `${this.baseUrl}/api/login`; // Create the full URL
     return this.http.post(loginUrl, user);
+  }
+
+  logout(){
+    sessionStorage.clear();
   }
 }
 

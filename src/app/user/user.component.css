@@ -1,0 +1,44 @@
+.profile-container {
+    max-width: 600px;
+    margin: 20px auto;
+    background-color: #fff;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.profile-picture {
+    width: 100%;
+    max-height: 300px;
+    object-fit: cover;
+}
+
+.user-info {
+    padding: 20px;
+}
+
+.user-info h1 {
+    margin-bottom: 10px;
+}
+
+.user-info p {
+    margin-bottom: 5px;
+}
+
+.recent-posts {
+    padding: 20px;
+}
+
+.post {
+    margin-bottom: 20px;
+    border-bottom: 1px solid #ddd;
+    padding-bottom: 20px;
+}
+
+.post h2 {
+    margin-bottom: 10px;
+}
+
+.post p {
+    color: #555;
+}

@@ -31,7 +31,8 @@ import { CreateBacklogComponent } from './create-backlog/create-backlog.componen
 import { EditBacklogComponent } from './edit-backlog/edit-backlog.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { CreateProjectComponent } from './create-project/create-project.component';
-
+import { UserComponent } from './user/user.component';
+import { ToastrModule } from 'ngx-toastr';
 
 @NgModule({
   declarations: [
@@ -52,6 +53,7 @@ import { CreateProjectComponent } from './create-project/create-project.componen
     CreateBacklogComponent,
     EditBacklogComponent,
     CreateProjectComponent,
+    UserComponent,
    
   ],
   imports: [
@@ -70,7 +72,12 @@ import { CreateProjectComponent } from './create-project/create-project.componen
     FormsModule,
     MatInputModule,
     NgChartsModule,
-    NgbModule
+    NgbModule,
+    ToastrModule.forRoot({
+      timeOut: 3000, // Set the default toast timeout
+      positionClass: 'toast-top-right', // Set the default position of toasts
+      preventDuplicates: true, // Avoid duplicate toasts
+    })
   ],
   providers: [{ provide: NgChartsConfiguration, useValue: { generateColors: false }}],
   bootstrap: [AppComponent],
