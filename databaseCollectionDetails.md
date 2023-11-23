@@ -29,6 +29,19 @@ collection example and the parameters it takes in:
   "projectdescription": "descr1"
 }
 
+Collection name : "issueDetails"
+{
+  "project": "project1",
+  "issuetype": "task",
+  "status": "in-progress",
+  "summary": "test",
+  "description": "rfvr rgv r ivw",
+  "assignee": "user1",
+  "reporter": "user1",
+  "tags": "test",
+  "priority": "medium"
+}
+
 
 Collection name : "issueDetails"
 {

@@ -73,4 +73,8 @@ export class UtilityService {
     const Url = `${this.apiBaseUrl}/api/createProject`; 
     return this.http.post(Url, task);
   }
+
+  isloggedin(){
+    return sessionStorage.getItem('username')!=null;
+  }
 }
