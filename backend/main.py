@@ -125,6 +125,62 @@ def get_backlog(id):
     resp = dumps(data)
     return resp
 
+@app.route('/api/getUser/<username>', methods=['GET'])
+def getUser(username):
+    data = (db.users.find_one({"username":username}))
+    resp = dumps(data)
+    return resp
+
+@app.route('/api/editUser/<username>', methods=['PUT'])
+def editUser(username):
+    try:
+        data = request.get_json()
+
+        # Update the issue by _id
+        result = db.users.update_one(
+            {"username": username},
+            {"$set": data}
+        )
+        print(data)
+
+        # Check if the issue was found and updated
+        if result.modified_count == 1:
+            return jsonify({"message": "Issue updated successfully"})
+        else:
+            return jsonify({"error": "Issue not found"}), 404
+
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+    
+
+@app.route('/api/changepwds', methods=['PUT'])
+def changepwds():
+    data = request.get_json()
+
+    # Assuming you have the username, current password, and new password
+    username = data.get('username')
+    current_password = data.get('password')
+    new_password = data.get('newpassword')
+
+    # Fetch user from the database using the username (you might want to add additional security checks here)
+    user = db.users.find_one({"username": username, "password": current_password})
+    print(username)
+    if user:
+        # Update the user's password
+        result = db.users.update_one(
+            {"username": username},
+            {"$set": {"password": new_password}}
+        )
+
+        # Check if the password was successfully updated
+        if result.modified_count == 1:
+            return jsonify({"message": "Password changed successfully"})
+        else:
+            return jsonify({"error": "Password change failed"}), 500
+    else:
+        return jsonify({"error": "Invalid username or current password"}), 401
+
+
 @app.route('/api/createProject', methods=['POST'])
 def createProject():
     task_data = request.get_json()
@@ -247,6 +303,7 @@ def get_new_users(project_name):
     print(user_list)
 
     return jsonify({'new_project_users': user_list})
+
 @app.route('/addusertoproject/<username>/<projectname>', methods=['GET'])
 def update_project(username,projectname):
     # data = request.json

@@ -7,7 +7,11 @@ collection example and the parameters it takes in:
   "password": "password1",
   "name": "User One",
   "role": "admin",
-  "accessproject": "project1"
+  "email": "examplemail@gmail.com",
+  "accessproject": "project1",
+  "address": "sgdjhqw qweuydg weiydgf  wueygfd weuyuwye ,califoirnia, USA",
+  "phone": "1234567890",
+  "gender": "male"
 }
 
 Collection name: "taskDeatils"
