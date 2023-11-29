@@ -87,3 +87,21 @@ hr{
   max-width: none !important;
   width: auto !important;
 }
+
+.form-control {
+  width: 100%;
+  box-sizing: border-box; /* This ensures padding and borders are included in the width */
+}
+
+.modal-body {
+  padding: 15px;
+}
+
+.form-group > label {
+  display: block;
+  margin-bottom: 5px;
+}
+
+.form-group {
+  margin-bottom: 15px; /* Space between form groups */
+}
