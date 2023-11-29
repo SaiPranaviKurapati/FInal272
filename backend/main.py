@@ -153,6 +153,7 @@ def createTask():
     db.taskDeatils.insert_one({'project': project, 'issuetype': issuetype,'status':status,'summary':summary,'description':description,'assignee':assignee,'reporter':reporter})
     return jsonify({'message': 'Created task successfully'})
 
+#done by me - update issue
 @app.route('/api/updateTask/<task_id_str>', methods=['PUT'])
 def updateTask(task_id_str):
     task_data = request.get_json()
@@ -277,10 +278,25 @@ def get_new_users(project_name):
 
     return jsonify({'new_project_users': user_list})
 
+#added by me - to get taskdetails according to task id
+@app.route('/api/tasks/<task_id>', methods=['GET'])
+def get_task(task_id):
+    try:
+        # Convert string ID to MongoDB ObjectId
+        obj_id = ObjectId(task_id)
+    except:
+        return jsonify({'error': 'Invalid task ID format'}), 400
 
+    # Fetch task from the database
+    task = db.taskDeatils.find_one({'_id': obj_id})  # Replace 'taskDeatils' if it's a typo
 
+    if not task:
+        return jsonify({'error': 'Task not found'}), 404
 
+    # Convert the task document from MongoDB to a JSON-serializable format
+    task['_id'] = str(task['_id'])
 
+    return jsonify(task)
 
 
 if __name__ == '__main__':
