@@ -20,6 +20,7 @@
 
     <button
       class="btn btn-primary btn-sm details"
+      (click)="openModal()"
       data-toggle="modal"
       data-target="#exampleModalCenter"
     >
@@ -48,6 +49,8 @@
       <div class="update-issue-container">
         <h2>Update Task</h2>
         <form>
+          <!-- Hidden input for taskId -->
+          <input type="hidden" id="taskId" [value]="currentTaskId" />
           <div class="form-group">
             <label for="projectDropdown">Project</label>
             <select id="project" name="project" class="form-control">

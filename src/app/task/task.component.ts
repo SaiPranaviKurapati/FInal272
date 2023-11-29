@@ -35,7 +35,11 @@ const editorConfig = {
   styleUrls: ["./task.component.css"],
 })
 export class TaskComponent {
+
+  
   @Input() content: any;
+  //reqd for update task
+  currentTaskId: string = '';
 
   ckeditor = ClassicEditor;
   editorConfig = editorConfig;
@@ -73,5 +77,10 @@ export class TaskComponent {
     }
     // Handle the case when this.content or this.content.issuetype is undefined
     return {};
+  }
+
+  openModal() {
+    this.currentTaskId = this.content._id;
+    console.log("Current Task ID:", this.currentTaskId); 
   }
 }
