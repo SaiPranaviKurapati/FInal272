@@ -1,3 +1,4 @@
+import bson
 from flask import Flask, request, jsonify
 from pymongo import MongoClient
 from flask_cors import CORS
@@ -31,6 +32,8 @@ def update_task_status(id,new_status):
         return jsonify({'message': 'Task updated successfully'})
     except Exception as e:
         return jsonify({'error': str(e)})
+    
+
 
 @app.route('/api/register', methods=['POST'])
 def register():
@@ -206,6 +209,33 @@ def createTask():
     db.taskDeatils.insert_one({'project': project, 'issuetype': issuetype,'status':status,'summary':summary,'description':description,'assignee':assignee,'reporter':reporter})
     return jsonify({'message': 'Created task successfully'})
 
+#done by me - update issue
+@app.route('/api/updateTask/<task_id_str>', methods=['PUT'])
+def updateTask(task_id_str):
+    task_data = request.get_json()
+
+    # Convert the string ID from the URL to a MongoDB ObjectId
+    try:
+        task_id = ObjectId(task_id_str)
+    except bson.errors.InvalidId:
+        return jsonify({'message': 'Invalid task ID format'}), 400
+
+    # Check if the task exists
+    existing_task = db.taskDeatils.find_one({'_id': task_id})
+    if not existing_task:
+        return jsonify({'message': 'Task not found'}), 404
+
+    # Prepare the update dictionary
+    update_data = {}
+    for field in ['project', 'issuetype', 'status', 'summary', 'description', 'assignee', 'reporter']:
+        if field in task_data:
+            update_data[field] = task_data[field]
+
+    # Perform the update
+    db.taskDeatils.update_one({'_id': task_id}, {'$set': update_data})
+
+    return jsonify({'message': 'Task updated successfully'})
+
 # @app.route('/', methods=['GET'])
 # def get_details():
 #     done_data= list(db.taskDeatils.find({'status':'done'}))
@@ -304,6 +334,26 @@ def get_new_users(project_name):
 
     return jsonify({'new_project_users': user_list})
 
+#added by me - to get taskdetails according to task id
+@app.route('/api/tasks/<task_id>', methods=['GET'])
+def get_task(task_id):
+    try:
+        # Convert string ID to MongoDB ObjectId
+        obj_id = ObjectId(task_id)
+    except:
+        return jsonify({'error': 'Invalid task ID format'}), 400
+
+    # Fetch task from the database
+    task = db.taskDeatils.find_one({'_id': obj_id})  # Replace 'taskDeatils' if it's a typo
+
+    if not task:
+        return jsonify({'error': 'Task not found'}), 404
+
+    # Convert the task document from MongoDB to a JSON-serializable format
+    task['_id'] = str(task['_id'])
+
+    return jsonify(task)
+
 @app.route('/addusertoproject/<username>/<projectname>', methods=['GET'])
 def update_project(username,projectname):
     # data = request.json
@@ -332,6 +382,7 @@ def delete_project(username,projectname):
 
     
     return jsonify({'message': "success"})
+
 
 if __name__ == '__main__':
     app.run(debug=True)

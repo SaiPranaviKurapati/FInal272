@@ -61,3 +61,47 @@ hr{
   margin-bottom: 10px;
 }
 
+.modal-content {
+  /* Ensure the modal content takes full width of its parent */
+  width: 100%;
+}
+
+.update-issue-container .form-control {
+  /* This will make your form fields take up 100% of the modal body */
+  width: 100%;
+  box-sizing: border-box; /* Include padding and border in the element's total width and height */
+}
+
+.update-issue-container .form-group {
+  margin-bottom: 15px; /* Add some space between form groups */
+}
+
+/* Adjust modal padding if necessary */
+.modal-body {
+  padding: 15px;
+}
+
+/* Ensure the modal dialog is centered and covers the desired width, if you want it to be responsive consider using media queries */
+.modal-dialog {
+  margin: 30px auto !important;
+  max-width: none !important;
+  width: auto !important;
+}
+
+.form-control {
+  width: 100%;
+  box-sizing: border-box; /* This ensures padding and borders are included in the width */
+}
+
+.modal-body {
+  padding: 15px;
+}
+
+.form-group > label {
+  display: block;
+  margin-bottom: 5px;
+}
+
+.form-group {
+  margin-bottom: 15px; /* Space between form groups */
+}
