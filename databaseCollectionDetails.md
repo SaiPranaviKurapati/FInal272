@@ -7,7 +7,11 @@ collection example and the parameters it takes in:
   "password": "password1",
   "name": "User One",
   "role": "admin",
-  "accessproject": "project1"
+  "email": "examplemail@gmail.com",
+  "accessproject": "project1",
+  "address": "sgdjhqw qweuydg weiydgf  wueygfd weuyuwye ,califoirnia, USA",
+  "phone": "1234567890",
+  "gender": "male"
 }
 
 Collection name: "taskDeatils"
@@ -28,5 +32,34 @@ collection example and the parameters it takes in:
   "projectname": "ghsjc1",
   "projectdescription": "descr1"
 }
+
+Collection name : "issueDetails"
+{
+  "project": "project1",
+  "issuetype": "task",
+  "status": "in-progress",
+  "summary": "test",
+  "description": "rfvr rgv r ivw",
+  "assignee": "user1",
+  "reporter": "user1",
+  "tags": "test",
+  "priority": "medium"
+}
+
+
+Collection name : "issueDetails"
+{
+  "project": "project1",
+  "issuetype": "task",
+  "status": "in-progress",
+  "summary": "test",
+  "description": "rfvr rgv r ivw",
+  "assignee": "user1",
+  "reporter": "user1",
+  "tags": "test",
+  "priority": "medium"
+}
+
+
 
 

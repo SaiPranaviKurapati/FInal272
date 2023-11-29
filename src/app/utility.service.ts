@@ -67,10 +67,34 @@ export class UtilityService {
   }
 //------
 
+  getUser(username:string): Observable<any>{
+    const URL = `${this.apiBaseUrl}/api/getUser/${username}`; 
+    return this.http.get(URL);
+  }
+
+
+  editUser( username: string, password: string, name: string, email: string, address: string, phone: string, gender: string): Observable<any>{
+    const task = {username, password, name, email, address, phone, gender};
+
+    const createBacklogUrl = `${this.apiBaseUrl}/api/editUser/${username}`; 
+    return this.http.put(createBacklogUrl, task);
+  }
+
   createProject(project:string, description:string){
     const task = { project,description};
     console.log(task)
     const Url = `${this.apiBaseUrl}/api/createProject`; 
     return this.http.post(Url, task);
+  }
+
+  isloggedin(){
+    return sessionStorage.getItem('username')!=null;
+  }
+
+  changepwd(username: string,password: string, newpassword: string,){
+    const task = {username, password, newpassword};
+
+    const createBacklogUrl = `${this.apiBaseUrl}/api/changepwds`; 
+    return this.http.put(createBacklogUrl, task);
   }
 }
