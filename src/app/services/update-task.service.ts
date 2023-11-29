@@ -14,7 +14,7 @@ export class UpdateTaskService {
   constructor(private http: HttpClient) { }
 
   getTask(taskId: string): Observable<any> {
-    return this.http.get(`${this.getTaskByIdUrl}/tasks/${taskId}`);
+    return this.http.get(`${this.getTaskByIdUrl}${taskId}`);
 
   }
 

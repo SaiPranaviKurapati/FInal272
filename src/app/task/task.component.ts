@@ -1,10 +1,13 @@
-import { Component, Input } from "@angular/core";
+import { Component, Input, ChangeDetectorRef, TemplateRef, ViewChild } from "@angular/core";
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+
 import {
   CdkDragDrop,
   moveItemInArray,
   transferArrayItem,
 } from "@angular/cdk/drag-drop";
 import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
+import { UpdateTaskService } from "../services/update-task.service";
 
 const editorConfig = {
   // ui: 'pt',
@@ -35,11 +38,19 @@ const editorConfig = {
   styleUrls: ["./task.component.css"],
 })
 export class TaskComponent {
-
-  
+  @ViewChild('modalContent') modalContent!: TemplateRef<any>;  
   @Input() content: any;
   //reqd for update task
   currentTaskId: string = '';
+  taskToEdit: any = {
+    project: '',
+    issuetype: '',
+    status: '',
+    summary: '',
+    description: '',
+    assignee: '',
+    reporter: '',
+  };
 
   ckeditor = ClassicEditor;
   editorConfig = editorConfig;
@@ -79,8 +90,57 @@ export class TaskComponent {
     return {};
   }
 
-  openModal() {
-    this.currentTaskId = this.content._id;
-    console.log("Current Task ID:", this.currentTaskId); 
+  constructor(private taskService : UpdateTaskService, private cdr: ChangeDetectorRef, private modalService: NgbModal) {}
+
+  // openModal() {
+  //   console.log("Content Object:", this.content);  // Log the content object
+  //   if (this.content._id && this.content._id.$oid) {
+  //     this.currentTaskId = this.content._id.$oid;
+  //   } else {
+  //     console.error('Task ID is not in the expected format:', this.content._id);
+  //     return; // Exit the function if the ID format is not as expected
+  //   }  
+  //   console.log("Current Task ID:", this.currentTaskId);  // Log the extracted task ID
+  //   this.fetchTaskDetails(this.currentTaskId);
+  // }
+
+  openModal(content: TemplateRef<any>) {
+    if (this.content._id && this.content._id.$oid) {
+      this.currentTaskId = this.content._id.$oid;
+      this.fetchTaskDetails(this.currentTaskId, content);
+    } else {
+      console.error('Task ID is not in the expected format:', this.content._id);
+    }
   }
+
+
+// fetchTaskDetails(taskId: string) {
+//     this.taskService.getTask(taskId).subscribe(
+//       (taskData) => {
+//         console.log('Fetched Task Data:',taskData);
+//         this.taskToEdit = taskData;
+//         // Now taskToEdit is bound to your form fields
+//         this.cdr.detectChanges(); // Trigger change detection manually
+//         this.showModal(); // Open the modal after data is fetched
+//       },
+//       (error) => {
+//         console.error('Error fetching task details', error);
+//         // Handle error fetching task details
+//       }
+//     );
+//   }
+
+fetchTaskDetails(taskId: string, content: TemplateRef<any>) {
+  this.taskService.getTask(taskId).subscribe(
+    (taskData) => {
+      this.taskToEdit = taskData;
+      this.cdr.detectChanges();
+      this.modalService.open(content); // Open the modal here
+    },
+    (error) => {
+      console.error('Error fetching task details', error);
+    }
+  );
+}
+
 }
