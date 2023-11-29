@@ -1,3 +1,4 @@
+import bson
 from flask import Flask, request, jsonify
 from pymongo import MongoClient
 from flask_cors import CORS
@@ -31,6 +32,8 @@ def update_task_status(id,new_status):
         return jsonify({'message': 'Task updated successfully'})
     except Exception as e:
         return jsonify({'error': str(e)})
+    
+
 
 @app.route('/api/register', methods=['POST'])
 def register():
@@ -150,6 +153,32 @@ def createTask():
     db.taskDeatils.insert_one({'project': project, 'issuetype': issuetype,'status':status,'summary':summary,'description':description,'assignee':assignee,'reporter':reporter})
     return jsonify({'message': 'Created task successfully'})
 
+@app.route('/api/updateTask/<task_id_str>', methods=['PUT'])
+def updateTask(task_id_str):
+    task_data = request.get_json()
+
+    # Convert the string ID from the URL to a MongoDB ObjectId
+    try:
+        task_id = ObjectId(task_id_str)
+    except bson.errors.InvalidId:
+        return jsonify({'message': 'Invalid task ID format'}), 400
+
+    # Check if the task exists
+    existing_task = db.taskDeatils.find_one({'_id': task_id})
+    if not existing_task:
+        return jsonify({'message': 'Task not found'}), 404
+
+    # Prepare the update dictionary
+    update_data = {}
+    for field in ['project', 'issuetype', 'status', 'summary', 'description', 'assignee', 'reporter']:
+        if field in task_data:
+            update_data[field] = task_data[field]
+
+    # Perform the update
+    db.taskDeatils.update_one({'_id': task_id}, {'$set': update_data})
+
+    return jsonify({'message': 'Task updated successfully'})
+
 # @app.route('/', methods=['GET'])
 # def get_details():
 #     done_data= list(db.taskDeatils.find({'status':'done'}))
@@ -247,6 +276,12 @@ def get_new_users(project_name):
     print(user_list)
 
     return jsonify({'new_project_users': user_list})
+
+
+
+
+
+
 
 if __name__ == '__main__':
     app.run(debug=True)
