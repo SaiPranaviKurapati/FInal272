@@ -1,5 +1,6 @@
 import { Component, Input, ChangeDetectorRef, TemplateRef, ViewChild } from "@angular/core";
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import Swal from 'sweetalert2';
 
 import {
   CdkDragDrop,
@@ -60,11 +61,7 @@ export class TaskComponent {
     "Task 2 completed require additional fucntions",
     "Project name changed",
   ];
-  // fileToUpload: File | null = null;
-
-  // handleFileInput(files: FileList) {
-  //   this.fileToUpload = files.item(0);
-  // }
+ 
   uploadedFileName: string | null = null;
 
   handleFileInput(event: any): void {
@@ -92,18 +89,6 @@ export class TaskComponent {
 
   constructor(private taskService : UpdateTaskService, private cdr: ChangeDetectorRef, private modalService: NgbModal) {}
 
-  // openModal() {
-  //   console.log("Content Object:", this.content);  // Log the content object
-  //   if (this.content._id && this.content._id.$oid) {
-  //     this.currentTaskId = this.content._id.$oid;
-  //   } else {
-  //     console.error('Task ID is not in the expected format:', this.content._id);
-  //     return; // Exit the function if the ID format is not as expected
-  //   }  
-  //   console.log("Current Task ID:", this.currentTaskId);  // Log the extracted task ID
-  //   this.fetchTaskDetails(this.currentTaskId);
-  // }
-
   openModal(content: TemplateRef<any>) {
     if (this.content._id && this.content._id.$oid) {
       this.currentTaskId = this.content._id.$oid;
@@ -112,23 +97,6 @@ export class TaskComponent {
       console.error('Task ID is not in the expected format:', this.content._id);
     }
   }
-
-
-// fetchTaskDetails(taskId: string) {
-//     this.taskService.getTask(taskId).subscribe(
-//       (taskData) => {
-//         console.log('Fetched Task Data:',taskData);
-//         this.taskToEdit = taskData;
-//         // Now taskToEdit is bound to your form fields
-//         this.cdr.detectChanges(); // Trigger change detection manually
-//         this.showModal(); // Open the modal after data is fetched
-//       },
-//       (error) => {
-//         console.error('Error fetching task details', error);
-//         // Handle error fetching task details
-//       }
-//     );
-//   }
 
 fetchTaskDetails(taskId: string, content: TemplateRef<any>) {
   this.taskService.getTask(taskId).subscribe(
@@ -141,6 +109,64 @@ fetchTaskDetails(taskId: string, content: TemplateRef<any>) {
       console.error('Error fetching task details', error);
     }
   );
+}
+
+saveChanges() {
+  if (this.currentTaskId && this.validateTask(this.taskToEdit)) {
+    this.taskService.updateTask(this.currentTaskId, this.taskToEdit).subscribe(
+      response => {
+        // Handle response here, show success message using SweetAlert2
+        Swal.fire({
+          title: 'Success!',
+          text: 'Task updated successfully',
+          icon: 'success',
+          confirmButtonText: 'OK'
+        }).then((result) => {
+          if (result.isConfirmed) {
+            this.modalService.dismissAll(); // Close the modal if update is successful
+          }
+        });
+      },
+      error => {
+        // Handle error here, show error message using SweetAlert2
+        Swal.fire({
+          title: 'Error!',
+          text: 'There was a problem updating the task',
+          icon: 'error',
+          confirmButtonText: 'OK'
+        });
+      }
+    );
+  } else {
+    // Handle validation error
+    Swal.fire({
+      title: 'Invalid Data',
+      text: 'Please check the task details and try again.',
+      icon: 'warning',
+      confirmButtonText: 'OK'
+    });
+  }
+}
+
+validateTask(task: any): boolean {
+  // Check if the required fields are not empty or null
+  // Add more validation as needed based on your requirements
+  const isValidProject = task.project && task.project.trim() !== '';
+  const isValidIssueType = task.issuetype && task.issuetype.trim() !== '';
+  const isValidStatus = task.status && task.status.trim() !== '';
+  const isValidSummary = task.summary && task.summary.trim() !== '';
+  const isValidDescription = task.description && task.description.trim() !== '';
+  const isValidAssignee = task.assignee && task.assignee.trim() !== '';
+  const isValidReporter = task.reporter && task.reporter.trim() !== '';
+
+  // Return true only if all validations pass
+  return isValidProject && isValidIssueType && isValidStatus &&
+         isValidSummary && isValidDescription && isValidAssignee &&
+         isValidReporter;
+}
+
+closeModal() {
+  this.modalService.dismissAll();
 }
 
 }
