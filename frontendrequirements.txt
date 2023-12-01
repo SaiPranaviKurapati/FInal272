@@ -1,4 +1,4 @@
-# Install project dependencies
+# Install project dependencies, hello
 npm install
 
 # Install ngx-toastr
