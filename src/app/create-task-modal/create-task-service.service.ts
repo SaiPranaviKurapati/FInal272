@@ -16,8 +16,8 @@ export class CreateTaskServiceService {
 
   }
 
-  createTask(project: string, issuetype:string,status: string,summary:string,description:string,assignee:string,reporter:string) {
-    const task = { project, issuetype,status,summary,description,assignee,reporter};
+  createTask(project: string, issuetype:string,status: string,summary:string,description:string,assignee:string,reporter:string,priority:string) {
+    const task = { project, issuetype,status,summary,description,assignee,reporter,priority};
 
     const createTaskUrl = `${this.baseUrl}/api/createTask`; // Create the full URL
     return this.http.post(createTaskUrl, task);

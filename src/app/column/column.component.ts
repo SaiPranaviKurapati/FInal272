@@ -22,8 +22,12 @@ export class ColumnComponent {
   todoTasks: any[] = [];
   inProgTasks: any[] = [];
   doneTasks: any[] = [];
+  backup_todoTasks: any[] = [];
+  backup_inProgTasks: any[] = [];
+  backup_doneTasks: any[] = [];
   tasks: any[] = [];
   @Input() project_name: string = "";
+  assignedToMeToggle:boolean = false;
 
   ngOnInit(): void {
     this.UtilityService.currentProjectName.subscribe(projectName => {
@@ -80,7 +84,7 @@ export class ColumnComponent {
         
     }
   }
- 
+  
   
   openCreateTask()
   {
@@ -88,5 +92,28 @@ export class ColumnComponent {
   }
   openCreateProject(){
     this.router.navigate(['/createProject'])
+  }
+
+  assignedToMe(){
+    this.UtilityService.getTasks(this.project_name).subscribe(data => {
+      this.tasks = data;
+      console.log(data);
+      this.todoTasks = this.tasks.filter((task) => task.status === 'to-do');
+      this.inProgTasks = this.tasks.filter((task) => task.status === 'in-progress');
+      this.doneTasks = this.tasks.filter((task) => task.status === 'done');
+      if(this.assignedToMeToggle==false){
+        this.assignedToMeToggle=true;
+        let username = sessionStorage.getItem('username');
+        this.todoTasks = this.tasks.filter((task) => task.status === 'to-do' && task.assignee == username);
+        this.inProgTasks = this.tasks.filter((task) => task.status === 'in-progress' && task.assignee == username);
+        this.doneTasks = this.tasks.filter((task) => task.status === 'done' && task.assignee == username);
+      }else{
+        this.assignedToMeToggle = false;
+        this.todoTasks = this.tasks.filter((task) => task.status === 'to-do');
+        this.inProgTasks = this.tasks.filter((task) => task.status === 'in-progress');
+        this.doneTasks = this.tasks.filter((task) => task.status === 'done');
+      }
+   });
+    
   }
 }

@@ -105,3 +105,15 @@ hr{
 .form-group {
   margin-bottom: 15px; /* Space between form groups */
 }
+.high{
+  color: red !important;
+  top: 33px;
+}
+.low{
+  color: #0052CC !important;
+  top: 33px;
+}
+.medium{
+  color: #FAD02C !important;
+  top: 33px;
+}

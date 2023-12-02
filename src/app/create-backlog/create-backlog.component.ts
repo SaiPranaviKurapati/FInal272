@@ -18,12 +18,17 @@ export class CreateBacklogComponent {
   tags:string = "";
   priority:string = "";
   projects: any[] = [];
+  users: any[] = [];
 
   constructor(private router: Router,private UtilityService:UtilityService) { 
    
-      this.UtilityService.getProjects().subscribe((data) => {
-        this.projects = data;
+    this.UtilityService.currentProjectName.subscribe(projectName => {
+      this.project = projectName;
+      this.UtilityService.get_project_users(this.project).subscribe(data => {
+        this.users = data.project_users;
+        console.log(data.type);
       });
+    });
   
     }
 

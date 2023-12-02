@@ -47,7 +47,7 @@ export class BacklogComponent {
   }
   createTask(issue: any){
 
-    this.CreateTaskServiceService.createTask(issue.project, issue.issuetype, issue.status, issue.summary, issue.description, issue.assignee, issue.reporter).subscribe(
+    this.CreateTaskServiceService.createTask(issue.project, issue.issuetype, issue.status, issue.summary, issue.description, issue.assignee, issue.reporter, issue.priority).subscribe(
       (response)=>{
         console.log(response)
       },

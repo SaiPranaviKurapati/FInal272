@@ -8,6 +8,9 @@ import {
   transferArrayItem,
 } from "@angular/cdk/drag-drop";
 import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
+import { Router } from '@angular/router';
+import { HttpClient } from '@angular/common/http';
+import { UtilityService } from '../utility.service';
 import { UpdateTaskService } from "../services/update-task.service";
 
 const editorConfig = {
@@ -41,6 +44,7 @@ const editorConfig = {
 export class TaskComponent {
   @ViewChild('modalContent') modalContent!: TemplateRef<any>;  
   @Input() content: any;
+  @Input() project_name : string = "";
   //reqd for update task
   currentTaskId: string = '';
   taskToEdit: any = {
@@ -55,14 +59,66 @@ export class TaskComponent {
 
   ckeditor = ClassicEditor;
   editorConfig = editorConfig;
-
+  showGit :boolean = false;
+  project:any = [];
+  gitCommit:any = []
   simpleItems: string[] = [
     "Task 1 name changed",
     "Task 2 completed require additional fucntions",
     "Project name changed",
   ];
- 
+  commitMsg:any = [];
   uploadedFileName: string | null = null;
+
+  constructor(private router: Router,private UtilityService:UtilityService, private taskService : UpdateTaskService, private cdr: ChangeDetectorRef, private modalService: NgbModal) { 
+
+    
+
+  }
+
+  ngOnInit() {
+    console.log("oninitia")
+    this.UtilityService.getProjectInfo(this.project_name).subscribe(
+      (response) => {
+        this.project = response[0];
+        // console.log("github api")
+        // console.log(this.project)
+        // if(this.project.ownername && this.project.gitname && this.project.ownername!="" && this.project.gitname!=""){
+        
+        //   this.UtilityService.gitStatus(this.project).subscribe(
+        //     (response) => {
+        //       this.gitCommit = response;
+        //       console.log("github api")
+        //       console.log(this.gitCommit)
+        //       for (let i in this.gitCommit){
+        //         this.commitMsg.push(this.gitCommit[i].commit.message)
+        //       }
+        //       // console.log(this.gitCommit[0].commit.message); // Handle the response from the server
+        //       this.showGit = this.containsString(this.content.description,this.commitMsg)
+        //       console.log("Git------")
+        //       console.log(this.showGit)
+        //     },
+        //     (error) => {
+        //       console.error(error); // Handle any errors
+        //     }
+        //   );
+        // }
+
+      },
+      (error) => {
+        console.error(error); // Handle any errors
+      }
+    );
+   }
+
+  containsString(s: string, stringList: string[]): boolean {
+    for (const stringInList of stringList) {
+      if (stringInList.includes(s)) {
+        return true;
+      }
+    }
+    return false;
+  }
 
   handleFileInput(event: any): void {
     const file: File = event.target.files[0];
@@ -86,8 +142,6 @@ export class TaskComponent {
     // Handle the case when this.content or this.content.issuetype is undefined
     return {};
   }
-
-  constructor(private taskService : UpdateTaskService, private cdr: ChangeDetectorRef, private modalService: NgbModal) {}
 
   openModal(content: TemplateRef<any>) {
     if (this.content._id && this.content._id.$oid) {

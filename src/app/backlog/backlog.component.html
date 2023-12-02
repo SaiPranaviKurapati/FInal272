@@ -3,7 +3,7 @@
         <h1>Backlog of {{project_name}}</h1>
       </div>
 
-      <button type="button btnCreate" class="btn btn-primary" (click)="openCreateBacklog()">Create Issue</button>
+      <button type="button btnCreate" class="btn btn-primary" (click)="openCreateBacklog()">Create Backlog</button>
     
     <div class="backlog-list border">
         <table class="table table-bordered">
@@ -39,7 +39,7 @@
                 <td>
                   <button type="button" class="btn btn-danger" (click)="deleteBacklog(issue)" ngbTooltip="Delete Issue"> <i class="fa fa-close"></i> </button>
                   <button type="button" class="btn btn-primary" (click)="editBacklog(issue)" ngbTooltip="Edit Issue"> <i class="fa fa-edit"></i> </button>
-                  <button type="button" class="btn btn-success" (click)="createTask(issue)" ngbTooltip="Create Task from Issue"> <i class="fa fa-tasks"></i> </button>
+                  <button type="button" class="btn btn-success" (click)="createTask(issue)" ngbTooltip="Create Task from Backlog"> <i class="fa fa-tasks"></i> </button>
                 </td>
 
               </tr>

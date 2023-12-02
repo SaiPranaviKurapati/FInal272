@@ -10,7 +10,8 @@ import { Router } from '@angular/router';
 export class CreateProjectComponent {
   project: string = '';
   description: string= '';
- 
+  ownername:string="";
+  gitname:string="";
 
   constructor(private router: Router,private UtilityService:UtilityService) { 
   
@@ -31,7 +32,7 @@ export class CreateProjectComponent {
     this.UtilityService.createProject(this.project, this.description).subscribe(
       (response)=>{
         console.log(response)
-        // this.router.navigate(['/dashboard']);
+        this.router.navigate(['/dashboard']);
       },
       (error)=>{
         console.log(error);
