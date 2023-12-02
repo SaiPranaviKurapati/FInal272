@@ -4,7 +4,7 @@
         <h1>Project Tracker</h1>
       </div>
       <div class="btnRow">
-        <button type="button btnFilter" class="btn btn-light">Task assigned to me</button>
+        <button type="button btnFilter" class="btn btn-light" (click)="assignedToMe()">Task assigned to me</button>
 
         <button type="button btnCreate" class="btn btn-primary" style="
         float: right; " (click)="openCreateProject()">Create Project</button>
@@ -23,7 +23,7 @@
        >
        <p class="colHeading">To-Do</p>
           <ng-container  *ngFor="let todotask of todoTasks">
-            <app-task [content]="todotask"> </app-task>
+            <app-task [content]="todotask" [project_name]="project_name"> </app-task>
           </ng-container>
       </div>
 
@@ -34,7 +34,7 @@
       (cdkDropListDropped)="drop($event)">
         <p class="colHeading">In Progress</p>
           <ng-container  *ngFor="let inProgTask of inProgTasks">
-            <app-task [content]="inProgTask"> </app-task>
+            <app-task [content]="inProgTask" [project_name]="project_name"> </app-task>
           </ng-container>
       </div>
 
@@ -45,7 +45,7 @@
       (cdkDropListDropped)="drop($event)">
         <p class="colHeading">Done</p>
         <ng-container  *ngFor="let doneTask of doneTasks">
-          <app-task [content]="doneTask"> </app-task>
+          <app-task [content]="doneTask" [project_name]="project_name"> </app-task>
         </ng-container>
       </div>
    

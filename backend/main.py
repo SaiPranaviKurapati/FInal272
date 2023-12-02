@@ -24,6 +24,19 @@ def getIssue(project):
     resp = dumps(data)
     return resp
 
+@app.route('/api/getUsers/<project>', methods=['GET'])
+def getUsers(project):
+    data = list(db.users.find({'project': project}))
+    resp = dumps(data)
+    return resp
+
+
+@app.route('/api/getProjectInfo/<project>', methods=['GET'])
+def getProjectInfo(project):
+    data = list(db.projects.find({'projectname': project}))
+    resp = dumps(data)
+    return resp
+
 @app.route('/api/updateTask/<id>/<new_status>', methods=['PUT'])
 def update_task_status(id,new_status):
     try:
@@ -189,8 +202,10 @@ def createProject():
     task_data = request.get_json()
     project = task_data.get('project')
     description = task_data.get('description')
+    ownername = task_data.get('ownername')
+    gitname = task_data.get('gitname')
     
-    db.projects.insert_one({'projectname': project,'projectdescription':description})
+    db.projects.insert_one({'projectname': project,'projectdescription':description,'ownername':ownername,'gitname':gitname })
     return jsonify({'message': 'Created task successfully'})
 
 
@@ -205,8 +220,9 @@ def createTask():
     description = task_data.get('description')
     assignee = task_data.get('assignee')
     reporter = task_data.get('reporter')
+    priority = task_data.get('priority')
     
-    db.taskDeatils.insert_one({'project': project, 'issuetype': issuetype,'status':status,'summary':summary,'description':description,'assignee':assignee,'reporter':reporter})
+    db.taskDeatils.insert_one({'project': project, 'issuetype': issuetype,'status':status,'summary':summary,'description':description,'assignee':assignee,'reporter':reporter,'priority':priority})
     return jsonify({'message': 'Created task successfully'})
 
 #done by me - update issue

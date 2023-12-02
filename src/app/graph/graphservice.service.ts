@@ -35,7 +35,7 @@ export class GraphserviceService {
     updateprojecttouser(projectName: any, selectedUsername: any) {
       console.log("inservice ts",projectName)
       console.log("inservice ts",selectedUsername)
-      const newurl = `http://127.0.0.1:5000//addusertoproject/${selectedUsername}/${projectName}`;
+      const newurl = `http://127.0.0.1:5000/addusertoproject/${selectedUsername}/${projectName}`;
       return this.http.get(newurl);
     }
     deleteprojectfromuser(projectName: any, selectedUsername1: any) {

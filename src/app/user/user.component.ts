@@ -128,4 +128,8 @@ export class UserComponent {
       );
     }
   }
+  cancle(){
+    console.log("skjdfb")
+    this.router.navigate(['/dashboard']);
+  }
 }

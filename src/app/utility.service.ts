@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, BehaviorSubject } from 'rxjs';
+import { of } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -38,7 +39,17 @@ export class UtilityService {
     return this.http.get(`${this.apiBaseUrl}/api/getProjects`);
   }
 
+  get_project_users(project:string): Observable<any>{
+    const URL = `${this.apiBaseUrl}/api/project_users/${project}`; 
+    return this.http.get(URL);
+  }
 
+  getProjectInfo(projectName: string): Observable<any> {
+    if(projectName && projectName != "")
+      return this.http.get(`${this.apiBaseUrl}/api/getProjectInfo/${projectName}`);
+    else
+      return of();
+  }
 
   //Backlog related APIS
 
@@ -96,5 +107,11 @@ export class UtilityService {
 
     const createBacklogUrl = `${this.apiBaseUrl}/api/changepwds`; 
     return this.http.put(createBacklogUrl, task);
+  }
+
+  gitStatus(project:any){
+    // lkk688/DeepDataMiningLearning
+    const URL = `https://api.github.com/${project.ownername}/${project.gitname}/commits`; 
+    return this.http.get(URL);
   }
 }

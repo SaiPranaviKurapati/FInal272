@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 // import { IssueService } from './issue.service';
 import { CreateTaskServiceService } from './create-task-service.service';
+import { UtilityService } from '../utility.service';
 
 @Component({
   selector: 'app-create-issue',
@@ -14,12 +15,28 @@ export class CreateIssueComponent {
   issuetype: string= '';
   status: string= '';
   summary: string= '';
+  priority: string= '';
   description: string= '';
   assignee: string= '';
   reporter: string= '';
+  projects: any[] = [];
+  users: any[] = [];
 
-  constructor(private router: Router,private createTaskServiceService:CreateTaskServiceService) {}
+  constructor(private router: Router,private createTaskServiceService:CreateTaskServiceService, private UtilityService:UtilityService) {
+   
+    this.UtilityService.getProjects().subscribe((data) => {
+      this.projects = data;
+    });
+    this.UtilityService.currentProjectName.subscribe(projectName => {
+      this.project = projectName;
+      this.UtilityService.get_project_users(this.project).subscribe(data => {
+        this.users = data.project_users;
+        console.log(data.type);
+      });
+    });
 
+
+  }
   createIssue() {
     // Prepare the issue data from form inputs
     // const issueData = {
@@ -32,9 +49,9 @@ export class CreateIssueComponent {
     //   reporter: this.selectedReporter,
     // };
 
-    this.createTaskServiceService.createTask(this.project, this.issuetype, this.status, this.summary, this.description, this.assignee, this.reporter).subscribe(
+    this.createTaskServiceService.createTask(this.project, this.issuetype, this.status, this.summary, this.description, this.assignee, this.reporter, this.priority).subscribe(
       (response)=>{
-        console.log(response)
+        console.log(this.priority)
         this.router.navigate(['/dashboard']);
       },
       (error)=>{

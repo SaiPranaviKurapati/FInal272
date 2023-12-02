@@ -9,14 +9,16 @@
       ><!-- Display the bug icon if the task type is 'bug' -->
       <i *ngIf="content.issuetype == 'bug'" class="fas fa-icon type fa-bug"></i>
       <!-- Display the tasks icon if the task type is 'task' -->
-      <i
-        *ngIf="content.issuetype == 'task'"
-        class="fas fa-icon type fa-tasks"
-      ></i>
-      <!-- <i class="fas fa-icon type" ></i> -->
-    </div>
-    <!-- <i class="fas fa-icon priority fa-bug"></i> -->
-    <!-- <p class="assign">Assigned to : User1</p> -->
+      <i *ngIf="content.issuetype == 'task'" class="fas fa-icon type fa-tasks"></i>
+      <!-- <i class=" fas type fa-regular fa-code-merge" style="top: 33px; color: #4cbb17;"></i> -->
+      
+      <i *ngIf="content.priority == 'high'" class="fas fa-icon type fa-solid fa-angle-up high" ></i>
+      <i *ngIf="content.priority == 'low'" class="fas fa-icon type fa-solid fa-angle-down low"></i>
+      <i *ngIf="content.priority == 'medium'" class="fas fa-icon type fa-solid fa-equals medium"></i>
+      </div>
+      <!-- <i class="fas fa-icon priority fa-bug"></i> -->
+      <p class="assign">Assigned to :  {{ content.assignee }}</p>
+      <p class="assign">Assigned to :  {{ content.reporter }}</p>
 
     <button
       class="btn btn-primary btn-sm details"
