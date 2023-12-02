@@ -3,10 +3,12 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve",
+    "start": "concurrently \"npm run start:ng\" \"npm run start:flask\"",
     "build":"NODE_OPTIONS=--max_old_space_size=8192 ng build --aot",
     "watch": "ng build --watch --configuration development",
-    "test": "ng test"
+    "test": "ng test",
+    "start:ng": "ng serve",
+    "start:flask": "cd backend && python main.py"
   },
   "private": true,
   "dependencies": {
