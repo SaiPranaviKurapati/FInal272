@@ -4,10 +4,11 @@
   "scripts": {
     "ng": "ng",
     "start": "concurrently \"npm run start:ng\" \"npm run start:flask\"",
-    "build":"NODE_OPTIONS=--max_old_space_size=8192 ng build --aot",
+    "build": "npm run build:ng",
+    "build:ng": "node --max-old-space-size=8192 ./node_modules/@angular/cli/bin/ng build --aot",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
-    "start:ng": "node --max_old_space_size=4096 ./node_modules/@angular/cli/bin/ng serve",
+    "start:ng": "npm run build:ng && node --max-old-space-size=4096 ./node_modules/@angular/cli/bin/ng serve",
     "start:flask": "cd backend && python main.py"
   },
   "private": true,
