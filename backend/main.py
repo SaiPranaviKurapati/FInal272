@@ -8,7 +8,12 @@ import itertools
 from bson.objectid import ObjectId
 
 app = Flask(__name__)
-client = MongoClient("mongodb://localhost:27017/")  
+
+#use this for production
+client = MongoClient("mongodb+srv://divijayuvraj30:RE83t9Q20gCaVaVO@alteregocluster.nusigg5.mongodb.net/?authSource=AlterEgoCluster&authMechanism=SCRAM-SHA-1")
+
+#use this for local mongoDB
+#client = MongoClient("mongodb://localhost:27017/")  
 db = client["mydatabase"]  
 CORS(app)  
 
