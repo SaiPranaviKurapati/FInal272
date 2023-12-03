@@ -6,7 +6,11 @@ import { HttpClient } from '@angular/common/http';
 })
 
 export class AuthService {
-  private baseUrl: string = 'http://127.0.0.1:5000'; // Set your base URL here
+//this is for production
+  private baseUrl: string = 'http://3.144.134.64';
+  
+  //use this for local
+  //private baseUrl: string = 'http://127.0.0.1:5000'; // Set your base URL here
 
   constructor(private http: HttpClient) {}
 
