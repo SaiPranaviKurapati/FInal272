@@ -9,3 +9,7 @@ npm install @types/google-one-tap --save-dev
 
 # Install Bootstrap
 npm install bootstrap
+npm install -g concurrently
+npm install --save-dev @types/sweetalert2
+
+
