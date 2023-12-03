@@ -1,14 +1,14 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-
+import { API_BASE_URL } from 'api-config';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UpdateTaskService {
-  private apiUrl = 'http://127.0.0.1:5000/api/updateTask/';
-  private getTaskByIdUrl = 'http://127.0.0.1:5000/api/tasks/';
+  private apiUrl = `${API_BASE_URL}/api/updateTask/`;
+  private getTaskByIdUrl = `${API_BASE_URL}/api/tasks/`;
 
 
   constructor(private http: HttpClient) { }

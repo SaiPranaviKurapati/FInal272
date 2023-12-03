@@ -2,13 +2,14 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, BehaviorSubject } from 'rxjs';
 import { of } from 'rxjs';
-
+import { API_BASE_URL } from 'api-config';
 @Injectable({
   providedIn: 'root'
 })
 export class UtilityService {
 
-  private apiBaseUrl = 'http://127.0.0.1:5000';
+  // private apiBaseUrl = 'http://127.0.0.1:5000';
+  private apiBaseUrl = API_BASE_URL;
 
   constructor(private http: HttpClient) { }
   projectNameSource = new BehaviorSubject<string>("");

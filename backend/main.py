@@ -1,5 +1,5 @@
 import bson
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, render_template, send_from_directory
 from pymongo import MongoClient
 from flask_cors import CORS
 from bson import json_util
@@ -9,6 +9,13 @@ from bson.objectid import ObjectId
 
 app = Flask(__name__)
 
+@app.route("/")
+def loadindex():
+    return send_from_directory('../dist/project_tracker', 'index.html')
+    # return render_template("./dist/project_tracker/index.html")
+@app.route('/<path:path>')
+def static_files(path):
+    return send_from_directory('../dist/project_tracker', path)
 #use this for production
 client = MongoClient("mongodb+srv://divijayuvraj30:RE83t9Q20gCaVaVO@alteregocluster.nusigg5.mongodb.net/?authSource=AlterEgoCluster&authMechanism=SCRAM-SHA-1")
 
@@ -146,11 +153,27 @@ def get_backlog(id):
     resp = dumps(data)
     return resp
 
-@app.route('/api/getUser/<username>', methods=['GET'])
-def getUser(username):
-    data = (db.users.find_one({"username":username}))
-    resp = dumps(data)
-    return resp
+
+@app.route('/api/getUserRole', methods=['POST'])
+def get_user_role():
+    data = request.get_json()
+    username = data.get('username')
+    
+    user_data = db.users.find_one({"username": username})
+
+    if user_data:
+        user_role = user_data.get('role', 'Role not found')
+
+        response_data = {
+            "username": username,
+            "role": user_role
+        }
+
+        resp = dumps(response_data)
+        print("getuserrole", resp)
+        return resp, 200
+    else:
+        return jsonify({"error": "User not found"}), 404
 
 @app.route('/api/editUser/<username>', methods=['PUT'])
 def editUser(username):

@@ -15,7 +15,6 @@ export class LoginComponent {
   password: string = ''
   result: any;
 
-
   constructor(private authService: AuthService, private router: Router,  private toastr: ToastrService,private builder: FormBuilder, ) {
     
   }
@@ -57,7 +56,18 @@ export class LoginComponent {
         (response) => {
           console.log(response);
           sessionStorage.setItem('username',this.username);
-          this.router.navigate(['/dashboard']);
+          this.authService.getUserRole(this.username).subscribe(
+            (response)=> {
+              const role = (response as any).role;
+
+              if (role === 'admin') {
+                this.router.navigate(['/admindashboard']);
+              } else {
+                this.router.navigate(['/dashboard']);
+              }
+              
+            }
+          )
         },
         (error) => {
           console.error(error);

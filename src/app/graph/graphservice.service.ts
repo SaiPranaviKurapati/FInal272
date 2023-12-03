@@ -1,17 +1,17 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-
+import { API_BASE_URL } from 'api-config';
 @Injectable({
   providedIn: 'root'
 })
 export class GraphserviceService {
    
-
+  // private apiBaseUrl = API_BASE_URL;
   
-    private apiUrl = 'http://127.0.0.1:5000/api/graph'; // Update with your Flask API URL
-    private usersListurl = 'http://127.0.0.1:5000/api/project_users';
-    private newusersListurl = 'http://127.0.0.1:5000/api/new_users';
+    private apiUrl = `${API_BASE_URL}/api/graph`; // Update with your Flask API URL
+    private usersListurl = `${API_BASE_URL}/api/project_users`;
+    private newusersListurl = `${API_BASE_URL}/api/new_users`;
   
     constructor(private http: HttpClient) { }
   
@@ -35,13 +35,13 @@ export class GraphserviceService {
     updateprojecttouser(projectName: any, selectedUsername: any) {
       console.log("inservice ts",projectName)
       console.log("inservice ts",selectedUsername)
-      const newurl = `http://127.0.0.1:5000/addusertoproject/${selectedUsername}/${projectName}`;
+      const newurl = `/addusertoproject/${selectedUsername}/${projectName}`;
       return this.http.get(newurl);
     }
     deleteprojectfromuser(projectName: any, selectedUsername1: any) {
       console.log("inservice ts",projectName)
       console.log("inservice ts",selectedUsername1)
-      const newurl = `http://127.0.0.1:5000/deleteusertoproject/${selectedUsername1}/${projectName}`;
+      const newurl = `${API_BASE_URL}/deleteusertoproject/${selectedUsername1}/${projectName}`;
       return this.http.get(newurl);
     }
     
