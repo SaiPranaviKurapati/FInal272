@@ -60,9 +60,9 @@ export class GraphComponent implements OnInit {
 
     this.dataService.updateprojecttouser(this.projectName,this.selectedUsername).subscribe(data=>{
       alert("User added successfully");
-      location.reload();
+      // location.reload();
      
-    //  this.router.navigate(['/graph', { projectName: this.projectName }])
+     this.router.navigate(['/graph', { projectName: this.projectName }])
     });
     
   }
@@ -72,8 +72,8 @@ export class GraphComponent implements OnInit {
 
     this.dataService.deleteprojectfromuser(this.projectName,this.selectedUsername1).subscribe(data=>{
      alert("User removed succesfully");
-    //  this.router.navigate(['/graph', { projectName: this.projectName }])
-     location.reload();
+      this.router.navigate(['/graph', { projectName: this.projectName }])
+    //  location.reload();
 
     });
     
