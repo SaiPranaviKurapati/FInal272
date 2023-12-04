@@ -33,6 +33,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { CreateProjectComponent } from './create-project/create-project.component';
 import { UserComponent } from './user/user.component';
 import { ToastrModule } from 'ngx-toastr';
+import { ValidatorsDirective } from './directives/validators.directive';
 
 @NgModule({
   declarations: [
@@ -54,6 +55,7 @@ import { ToastrModule } from 'ngx-toastr';
     EditBacklogComponent,
     CreateProjectComponent,
     UserComponent,
+    ValidatorsDirective,
    
   ],
   imports: [

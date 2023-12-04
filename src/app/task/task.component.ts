@@ -59,6 +59,7 @@ export class TaskComponent {
 
   //reqd for update-task
   users:any = [];
+  @ViewChild('readOnlyModalContent', { static: false }) readOnlyModalContent!: TemplateRef<any>;
 
   ckeditor = ClassicEditor;
   editorConfig = editorConfig;
@@ -240,6 +241,32 @@ validateTask(task: any): boolean {
 
 closeModal() {
   this.modalService.dismissAll();
+}
+
+openReadOnlyModal() {
+  if (this.content._id && this.content._id.$oid) {
+    this.currentTaskId = this.content._id.$oid;
+    this.fetchTaskDetailsForView(this.currentTaskId);
+    this.modalService.open(this.readOnlyModalContent);
+  } else {
+    console.error('Task ID is not in the expected format:', this.content._id);
+  }
+}
+
+// Modify the method to only require taskId if content isn't used
+fetchTaskDetailsForView(taskId: string) {
+  this.taskService.getTask(taskId).subscribe(
+    (taskData) => {
+      this.taskToEdit = taskData;
+      console.log(taskData);
+      this.cdr.detectChanges();
+      // Open the modal inside the subscription callback
+      this.modalService.open(this.readOnlyModalContent);
+    },
+    (error) => {
+      console.error('Error fetching task details', error);
+    }
+  );
 }
 
 }
