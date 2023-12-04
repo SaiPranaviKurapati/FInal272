@@ -44,16 +44,14 @@ export class UserComponent {
     }
     convertStringToArray(inputString: string): string[] {
       // Check if the string contains a comma
-      console.log(inputString)
+      console.log('iputString:',inputString)
       if (inputString.includes(',')) {
         // Split the comma-separated string into an array
         return inputString.split(',');
       } else {
         // If no comma is found, create an array with the single item
         return [inputString];
-      }
-
-      
+      }      
     }
 
   editUser() {
@@ -73,6 +71,7 @@ export class UserComponent {
         console.log(response)
 
         this.toastr.success('Changes Saved'); 
+
       },
       (error)=>{
         console.log(error);
@@ -95,6 +94,7 @@ export class UserComponent {
       this.address = this.user.address;
       this.phone = this.user.phone;
       this.gender = this.user.gender;
+      console.log('accessproject:', data.accessproject);
       this.projects =  this.convertStringToArray(this.accessproject);
     });
   }
