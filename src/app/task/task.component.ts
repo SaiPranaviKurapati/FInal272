@@ -57,6 +57,9 @@ export class TaskComponent {
     reporter: '',
   };
 
+  //reqd for update-task
+  users:any = [];
+
   ckeditor = ClassicEditor;
   editorConfig = editorConfig;
   showGit :boolean = false;
@@ -108,7 +111,23 @@ export class TaskComponent {
         console.error(error); // Handle any errors
       }
     );
-   }
+
+    //reqd for update Task
+    this.fetchProjectUsers(this.project_name);
+  }
+
+  //reqd for updateTask
+  fetchProjectUsers(projectName: string) {
+    this.UtilityService.get_project_users(projectName).subscribe(
+      (data) => {
+        console.log('Fetched users:', data);  // Log the fetched data
+        this.users = data.project_users;
+      },
+      (error) => {
+        console.error('Error fetching project users: ',error);
+      }
+    );
+  }
 
   containsString(s: string, stringList: string[]): boolean {
     for (const stringInList of stringList) {

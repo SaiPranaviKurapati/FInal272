@@ -17,10 +17,10 @@ def loadindex():
 def static_files(path):
     return send_from_directory('../dist/project_tracker', path)
 #use this for production
-client = MongoClient("mongodb+srv://divijayuvraj30:RE83t9Q20gCaVaVO@alteregocluster.nusigg5.mongodb.net/?authSource=AlterEgoCluster&authMechanism=SCRAM-SHA-1")
+# client = MongoClient("mongodb+srv://divijayuvraj30:RE83t9Q20gCaVaVO@alteregocluster.nusigg5.mongodb.net/?authSource=AlterEgoCluster&authMechanism=SCRAM-SHA-1")
 
-#use this for local mongoDB
-#client = MongoClient("mongodb://localhost:27017/")  
+# use this for local mongoDB
+client = MongoClient("mongodb://localhost:27017/")  
 db = client["mydatabase"]  
 CORS(app)  
 
@@ -58,7 +58,6 @@ def update_task_status(id,new_status):
     except Exception as e:
         return jsonify({'error': str(e)})
     
-
 
 @app.route('/api/register', methods=['POST'])
 def register():
