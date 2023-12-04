@@ -34,8 +34,7 @@ export class CreateIssueComponent {
         console.log(data.type);
       });
     });
-
-
+    
   }
   createIssue() {
     // Prepare the issue data from form inputs

@@ -57,6 +57,10 @@ export class TaskComponent {
     reporter: '',
   };
 
+  //reqd for update-task
+  users:any = [];
+  @ViewChild('readOnlyModalContent', { static: false }) readOnlyModalContent!: TemplateRef<any>;
+
   ckeditor = ClassicEditor;
   editorConfig = editorConfig;
   showGit :boolean = false;
@@ -72,7 +76,6 @@ export class TaskComponent {
 
   constructor(private router: Router,private UtilityService:UtilityService, private taskService : UpdateTaskService, private cdr: ChangeDetectorRef, private modalService: NgbModal) { 
 
-    
 
   }
 
@@ -109,7 +112,23 @@ export class TaskComponent {
         console.error(error); // Handle any errors
       }
     );
-   }
+
+    //reqd for update Task
+    this.fetchProjectUsers(this.project_name);
+  }
+
+  //reqd for updateTask
+  fetchProjectUsers(projectName: string) {
+    this.UtilityService.get_project_users(projectName).subscribe(
+      (data) => {
+        console.log('Fetched users:', data);  // Log the fetched data
+        this.users = data.project_users;
+      },
+      (error) => {
+        console.error('Error fetching project users: ',error);
+      }
+    );
+  }
 
   containsString(s: string, stringList: string[]): boolean {
     for (const stringInList of stringList) {
@@ -156,6 +175,7 @@ fetchTaskDetails(taskId: string, content: TemplateRef<any>) {
   this.taskService.getTask(taskId).subscribe(
     (taskData) => {
       this.taskToEdit = taskData;
+      console.log(taskData);
       this.cdr.detectChanges();
       this.modalService.open(content); // Open the modal here
     },
@@ -221,6 +241,32 @@ validateTask(task: any): boolean {
 
 closeModal() {
   this.modalService.dismissAll();
+}
+
+openReadOnlyModal() {
+  if (this.content._id && this.content._id.$oid) {
+    this.currentTaskId = this.content._id.$oid;
+    this.fetchTaskDetailsForView(this.currentTaskId);
+    this.modalService.open(this.readOnlyModalContent);
+  } else {
+    console.error('Task ID is not in the expected format:', this.content._id);
+  }
+}
+
+// Modify the method to only require taskId if content isn't used
+fetchTaskDetailsForView(taskId: string) {
+  this.taskService.getTask(taskId).subscribe(
+    (taskData) => {
+      this.taskToEdit = taskData;
+      console.log(taskData);
+      this.cdr.detectChanges();
+      // Open the modal inside the subscription callback
+      this.modalService.open(this.readOnlyModalContent);
+    },
+    (error) => {
+      console.error('Error fetching task details', error);
+    }
+  );
 }
 
 }
