@@ -82,9 +82,10 @@ export class UserComponent {
   }
 
   getUser(username:string){
+    console.log('getUser called with username:', username);
     this.UtilityService.getUser(username).subscribe((data) => {
       this.user = data;
-      console.log(data);
+      console.log('Server response data:',data);
       this.username = this.user.username;
       this.password = this.user.password;
       this.name = this.user.name;
