@@ -30,15 +30,7 @@
   </div>
 </div>
 
-<!-- Modal -->
-<!-- <div
-  class="modal fade"
-  id="exampleModalCenter"
-  tabindex="-1"
-  role="dialog"
-  aria-labelledby="exampleModalCenterTitle"
-  aria-hidden="true"
-> -->
+
 <ng-template #modalContent>
   <!-- <div class="modal-dialog modal-dialog-centered custom-modal-dialog" role="document"> -->
     <div class="modal-content">
@@ -48,15 +40,15 @@
           <form>
             <!-- Hidden input for taskId -->
             <input type="hidden" id="taskId" [value]="currentTaskId" />
-
+<!-- 
             <div class="form-group">
               <label for="projectDropdown">Project</label>
               <select id="project" name="project" class="form-control" [(ngModel)]="taskToEdit.project">
                 <option value="project1">Project 1</option>
-                <option value="project2">Project 2</option>
+                <option value="project2">Project 2</option> -->
                 <!-- Add more project options here -->
-              </select>
-            </div>
+              <!-- </select>
+            </div> -->
 
             <div class="form-group">
               <label for="issueTypeDropdown">Issue Type</label>
@@ -89,22 +81,14 @@
 
             <div class="form-group">
               <label for="assigneeDropdown">Assignee</label>
-              <!-- <select id="assignee" name="assignee" class="form-control" [(ngModel)]="taskToEdit.assignee">
-                <option value="user1">User 1</option>
-                <option value="user2">User 2</option>
-              </select> -->
-              <select [(ngModel)]="taskToEdit.assignee" name="assignee">
+              <select [(ngModel)]="taskToEdit.assignee" name="assignee" class="form-control">
                 <option *ngFor="let user of users" [value]="user.username">{{ user.name }}</option>
               </select>
             </div>
 
             <div class="form-group">
               <label for="reporterDropdown">Reporter</label>
-              <!-- <select id="reporter" name="reporter" class="form-control" [(ngModel)]="taskToEdit.reporter">
-                <option value="user1">User 1</option>
-                <option value="user2">User 2</option>
-              </select> -->
-              <select [(ngModel)]="taskToEdit.reporter" name="assignee">
+              <select [(ngModel)]="taskToEdit.reporter" name="reporter" class="form-control">
                 <option *ngFor="let user of users" [value]="user.username">{{ user.name }}</option>
               </select>
             </div>
@@ -116,7 +100,6 @@
         <button type="button" class="btn btn-primary" (click)="saveChanges()">Save Changes</button>
       </div>
     </div>
-  <!-- </div> -->
 </ng-template>
 
 

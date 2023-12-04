@@ -117,3 +117,7 @@ hr{
   color: #FAD02C !important;
   top: 33px;
 }
+
+.full-width-select{
+  width: -webkit-fill-available;
+}
