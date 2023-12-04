@@ -72,7 +72,6 @@ export class TaskComponent {
 
   constructor(private router: Router,private UtilityService:UtilityService, private taskService : UpdateTaskService, private cdr: ChangeDetectorRef, private modalService: NgbModal) { 
 
-    
 
   }
 
