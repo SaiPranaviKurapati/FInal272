@@ -174,6 +174,7 @@ fetchTaskDetails(taskId: string, content: TemplateRef<any>) {
   this.taskService.getTask(taskId).subscribe(
     (taskData) => {
       this.taskToEdit = taskData;
+      console.log(taskData);
       this.cdr.detectChanges();
       this.modalService.open(content); // Open the modal here
     },

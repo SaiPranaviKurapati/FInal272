@@ -104,7 +104,7 @@
                 <option value="user1">User 1</option>
                 <option value="user2">User 2</option>
               </select> -->
-              <select [(ngModel)]="taskToEdit.assignee" name="assignee">
+              <select [(ngModel)]="taskToEdit.reporter" name="assignee">
                 <option *ngFor="let user of users" [value]="user.username">{{ user.name }}</option>
               </select>
             </div>
