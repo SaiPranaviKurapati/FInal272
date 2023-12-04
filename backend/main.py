@@ -173,6 +173,7 @@ def get_user_role():
         return resp, 200
     else:
         return jsonify({"error": "User not found"}), 404
+    
 
 @app.route('/api/editUser/<username>', methods=['PUT'])
 def editUser(username):
@@ -426,6 +427,30 @@ def delete_project(username,projectname):
     
     return jsonify({'message': "success"})
 
+
+@app.route('/api/getUser/<username>', methods=['GET'])
+def getUser(username):
+    try:
+        # Assuming 'db' is your MongoDB database instance
+        user = db.users.find_one({"username": username})
+        if user:
+            # Prepare the user data to return
+            # Be cautious with sensitive data like passwords
+            user_data = {
+                "username": user.get("username"),
+                "name": user.get("name"),
+                "email": user.get("email"),
+                "address": user.get("address"),
+                "phone": user.get("phone"),
+                "gender": user.get("gender"),
+                "accessproject":user.get("accessproject")
+                # Include other user fields as needed
+            }
+            return jsonify(user_data)
+        else:
+            return jsonify({"error": "User not found"}), 404
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port = 5000, debug=True)
